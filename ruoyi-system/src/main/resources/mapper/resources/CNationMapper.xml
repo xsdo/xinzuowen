@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CNationMapper">
+    
+    <resultMap type="CNation" id="CNationResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="compositionId"    column="composition_id"    />
+        <result property="nImage"    column="n_image"    />
+        <result property="nVoice"    column="n_voice"    />
+        <result property="nLikes"    column="n_likes"    />
+        <result property="nDiscuss"    column="n_discuss"    />
+    </resultMap>
+
+    <sql id="selectCNationVo">
+        select id, isUsed, create_time, update_time, remarks, composition_id, n_image, n_voice, n_likes, n_discuss from c_nation
+    </sql>
+
+    <select id="selectCNationList" parameterType="CNation" resultMap="CNationResult">
+        <include refid="selectCNationVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="compositionId != null "> and composition_id = #{compositionId}</if>
+            <if test="nImage != null  and nImage != ''"> and n_image = #{nImage}</if>
+            <if test="nVoice != null "> and n_voice = #{nVoice}</if>
+            <if test="nLikes != null "> and n_likes = #{nLikes}</if>
+            <if test="nDiscuss != null "> and n_discuss = #{nDiscuss}</if>
+        </where>
+    </select>
+    
+    <select id="selectCNationById" parameterType="Long" resultMap="CNationResult">
+        <include refid="selectCNationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCNation" parameterType="CNation" useGeneratedKeys="true" keyProperty="id">
+        insert into c_nation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="compositionId != null">composition_id,</if>
+            <if test="nImage != null">n_image,</if>
+            <if test="nVoice != null">n_voice,</if>
+            <if test="nLikes != null">n_likes,</if>
+            <if test="nDiscuss != null">n_discuss,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="compositionId != null">#{compositionId},</if>
+            <if test="nImage != null">#{nImage},</if>
+            <if test="nVoice != null">#{nVoice},</if>
+            <if test="nLikes != null">#{nLikes},</if>
+            <if test="nDiscuss != null">#{nDiscuss},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCNation" parameterType="CNation">
+        update c_nation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="compositionId != null">composition_id = #{compositionId},</if>
+            <if test="nImage != null">n_image = #{nImage},</if>
+            <if test="nVoice != null">n_voice = #{nVoice},</if>
+            <if test="nLikes != null">n_likes = #{nLikes},</if>
+            <if test="nDiscuss != null">n_discuss = #{nDiscuss},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCNationById" parameterType="Long">
+        delete from c_nation where id = #{id}
+    </delete>
+
+    <delete id="deleteCNationByIds" parameterType="String">
+        delete from c_nation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

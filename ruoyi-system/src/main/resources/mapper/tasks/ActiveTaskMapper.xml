@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tasks.mapper.ActiveTaskMapper">
+    
+    <resultMap type="ActiveTask" id="ActiveTaskResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="acName"    column="ac_name"    />
+        <result property="acSynopsis"    column="ac_synopsis"    />
+        <result property="acStatus"    column="ac_status"    />
+        <result property="acType"    column="ac_type"    />
+        <result property="acAward"    column="ac_award"    />
+        <result property="acImage"    column="ac_image"    />
+        <result property="acBegintime"    column="ac_begintime"    />
+        <result property="acEndtime"    column="ac_endtime"    />
+        <result property="acIspay"    column="ac_ispay"    />
+        <result property="acPaperwork"    column="ac_paperwork"    />
+        <result property="acUrl"    column="ac_url"    />
+    </resultMap>
+
+    <sql id="selectActiveTaskVo">
+        select id, isUsed, create_time, update_time, remarks, ac_name, ac_synopsis, ac_status, ac_type, ac_award, ac_image, ac_begintime, ac_endtime, ac_ispay, ac_paperwork, ac_url from active_task
+    </sql>
+
+    <select id="selectActiveTaskList" parameterType="ActiveTask" resultMap="ActiveTaskResult">
+        <include refid="selectActiveTaskVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="acName != null  and acName != ''"> and ac_name like concat('%', #{acName}, '%')</if>
+            <if test="acSynopsis != null  and acSynopsis != ''"> and ac_synopsis = #{acSynopsis}</if>
+            <if test="acStatus != null "> and ac_status = #{acStatus}</if>
+            <if test="acType != null "> and ac_type = #{acType}</if>
+            <if test="acAward != null  and acAward != ''"> and ac_award = #{acAward}</if>
+            <if test="acImage != null  and acImage != ''"> and ac_image = #{acImage}</if>
+            <if test="acBegintime != null "> and ac_begintime = #{acBegintime}</if>
+            <if test="acEndtime != null "> and ac_endtime = #{acEndtime}</if>
+            <if test="acIspay != null "> and ac_ispay = #{acIspay}</if>
+            <if test="acPaperwork != null  and acPaperwork != ''"> and ac_paperwork = #{acPaperwork}</if>
+            <if test="acUrl != null  and acUrl != ''"> and ac_url = #{acUrl}</if>
+        </where>
+    </select>
+    
+    <select id="selectActiveTaskById" parameterType="Long" resultMap="ActiveTaskResult">
+        <include refid="selectActiveTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertActiveTask" parameterType="ActiveTask" useGeneratedKeys="true" keyProperty="id">
+        insert into active_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="acName != null">ac_name,</if>
+            <if test="acSynopsis != null">ac_synopsis,</if>
+            <if test="acStatus != null">ac_status,</if>
+            <if test="acType != null">ac_type,</if>
+            <if test="acAward != null">ac_award,</if>
+            <if test="acImage != null">ac_image,</if>
+            <if test="acBegintime != null">ac_begintime,</if>
+            <if test="acEndtime != null">ac_endtime,</if>
+            <if test="acIspay != null">ac_ispay,</if>
+            <if test="acPaperwork != null">ac_paperwork,</if>
+            <if test="acUrl != null">ac_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="acName != null">#{acName},</if>
+            <if test="acSynopsis != null">#{acSynopsis},</if>
+            <if test="acStatus != null">#{acStatus},</if>
+            <if test="acType != null">#{acType},</if>
+            <if test="acAward != null">#{acAward},</if>
+            <if test="acImage != null">#{acImage},</if>
+            <if test="acBegintime != null">#{acBegintime},</if>
+            <if test="acEndtime != null">#{acEndtime},</if>
+            <if test="acIspay != null">#{acIspay},</if>
+            <if test="acPaperwork != null">#{acPaperwork},</if>
+            <if test="acUrl != null">#{acUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateActiveTask" parameterType="ActiveTask">
+        update active_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="acName != null">ac_name = #{acName},</if>
+            <if test="acSynopsis != null">ac_synopsis = #{acSynopsis},</if>
+            <if test="acStatus != null">ac_status = #{acStatus},</if>
+            <if test="acType != null">ac_type = #{acType},</if>
+            <if test="acAward != null">ac_award = #{acAward},</if>
+            <if test="acImage != null">ac_image = #{acImage},</if>
+            <if test="acBegintime != null">ac_begintime = #{acBegintime},</if>
+            <if test="acEndtime != null">ac_endtime = #{acEndtime},</if>
+            <if test="acIspay != null">ac_ispay = #{acIspay},</if>
+            <if test="acPaperwork != null">ac_paperwork = #{acPaperwork},</if>
+            <if test="acUrl != null">ac_url = #{acUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteActiveTaskById" parameterType="Long">
+        delete from active_task where id = #{id}
+    </delete>
+
+    <delete id="deleteActiveTaskByIds" parameterType="String">
+        delete from active_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tasks.mapper.SuggestUserMapper">
+    
+    <resultMap type="SuggestUser" id="SuggestUserResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="userHead"    column="user_head"    />
+        <result property="userTable"    column="user_table"    />
+        <result property="userType"    column="user_type"    />
+        <result property="userFans"    column="user_fans"    />
+        <result property="uTop"    column="u_top"    />
+        <result property="uEndtime"    column="u_endtime"    />
+    </resultMap>
+
+    <sql id="selectSuggestUserVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, user_name, user_head, user_table, user_type, user_fans, u_top, u_endtime from suggest_user
+    </sql>
+
+    <select id="selectSuggestUserList" parameterType="SuggestUser" resultMap="SuggestUserResult">
+        <include refid="selectSuggestUserVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="userHead != null  and userHead != ''"> and user_head = #{userHead}</if>
+            <if test="userTable != null "> and user_table = #{userTable}</if>
+            <if test="userType != null "> and user_type = #{userType}</if>
+            <if test="userFans != null "> and user_fans = #{userFans}</if>
+            <if test="uTop != null "> and u_top = #{uTop}</if>
+            <if test="uEndtime != null "> and u_endtime = #{uEndtime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSuggestUserById" parameterType="Long" resultMap="SuggestUserResult">
+        <include refid="selectSuggestUserVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSuggestUser" parameterType="SuggestUser" useGeneratedKeys="true" keyProperty="id">
+        insert into suggest_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="userHead != null">user_head,</if>
+            <if test="userTable != null">user_table,</if>
+            <if test="userType != null">user_type,</if>
+            <if test="userFans != null">user_fans,</if>
+            <if test="uTop != null">u_top,</if>
+            <if test="uEndtime != null">u_endtime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="userHead != null">#{userHead},</if>
+            <if test="userTable != null">#{userTable},</if>
+            <if test="userType != null">#{userType},</if>
+            <if test="userFans != null">#{userFans},</if>
+            <if test="uTop != null">#{uTop},</if>
+            <if test="uEndtime != null">#{uEndtime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSuggestUser" parameterType="SuggestUser">
+        update suggest_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userHead != null">user_head = #{userHead},</if>
+            <if test="userTable != null">user_table = #{userTable},</if>
+            <if test="userType != null">user_type = #{userType},</if>
+            <if test="userFans != null">user_fans = #{userFans},</if>
+            <if test="uTop != null">u_top = #{uTop},</if>
+            <if test="uEndtime != null">u_endtime = #{uEndtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSuggestUserById" parameterType="Long">
+        delete from suggest_user where id = #{id}
+    </delete>
+
+    <delete id="deleteSuggestUserByIds" parameterType="String">
+        delete from suggest_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

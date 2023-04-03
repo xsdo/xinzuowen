@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CTipsMapper">
+    
+    <resultMap type="CTips" id="CTipsResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="discussId"    column="discuss_id"    />
+        <result property="discussUserId"    column="discuss_user_id"    />
+        <result property="tipsUserId"    column="tips_user_id"    />
+        <result property="cause"    column="cause"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectCTipsVo">
+        select id, isUsed, create_time, update_time, remarks, discuss_id, discuss_user_id, tips_user_id, cause, status from c_tips
+    </sql>
+
+    <select id="selectCTipsList" parameterType="CTips" resultMap="CTipsResult">
+        <include refid="selectCTipsVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="discussId != null "> and discuss_id = #{discussId}</if>
+            <if test="discussUserId != null "> and discuss_user_id = #{discussUserId}</if>
+            <if test="tipsUserId != null "> and tips_user_id = #{tipsUserId}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectCTipsById" parameterType="Long" resultMap="CTipsResult">
+        <include refid="selectCTipsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCTips" parameterType="CTips" useGeneratedKeys="true" keyProperty="id">
+        insert into c_tips
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="discussId != null">discuss_id,</if>
+            <if test="discussUserId != null">discuss_user_id,</if>
+            <if test="tipsUserId != null">tips_user_id,</if>
+            <if test="cause != null">cause,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="discussId != null">#{discussId},</if>
+            <if test="discussUserId != null">#{discussUserId},</if>
+            <if test="tipsUserId != null">#{tipsUserId},</if>
+            <if test="cause != null">#{cause},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCTips" parameterType="CTips">
+        update c_tips
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="discussId != null">discuss_id = #{discussId},</if>
+            <if test="discussUserId != null">discuss_user_id = #{discussUserId},</if>
+            <if test="tipsUserId != null">tips_user_id = #{tipsUserId},</if>
+            <if test="cause != null">cause = #{cause},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCTipsById" parameterType="Long">
+        delete from c_tips where id = #{id}
+    </delete>
+
+    <delete id="deleteCTipsByIds" parameterType="String">
+        delete from c_tips where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.DGoodwordsMapper">
+    
+    <resultMap type="DGoodwords" id="DGoodwordsResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="gCreateuser"    column="g_createuser"    />
+        <result property="gWords"    column="g_words"    />
+        <result property="departmentId"    column="department_id"    />
+    </resultMap>
+
+    <sql id="selectDGoodwordsVo">
+        select id, isUsed, create_time, update_time, remarks, g_createuser, g_words, department_id from d_goodwords
+    </sql>
+
+    <select id="selectDGoodwordsList" parameterType="DGoodwords" resultMap="DGoodwordsResult">
+        <include refid="selectDGoodwordsVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="gCreateuser != null  and gCreateuser != ''"> and g_createuser = #{gCreateuser}</if>
+            <if test="gWords != null  and gWords != ''"> and g_words = #{gWords}</if>
+            <if test="departmentId != null "> and department_id = #{departmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDGoodwordsById" parameterType="Long" resultMap="DGoodwordsResult">
+        <include refid="selectDGoodwordsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDGoodwords" parameterType="DGoodwords" useGeneratedKeys="true" keyProperty="id">
+        insert into d_goodwords
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="gCreateuser != null">g_createuser,</if>
+            <if test="gWords != null">g_words,</if>
+            <if test="departmentId != null">department_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="gCreateuser != null">#{gCreateuser},</if>
+            <if test="gWords != null">#{gWords},</if>
+            <if test="departmentId != null">#{departmentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDGoodwords" parameterType="DGoodwords">
+        update d_goodwords
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="gCreateuser != null">g_createuser = #{gCreateuser},</if>
+            <if test="gWords != null">g_words = #{gWords},</if>
+            <if test="departmentId != null">department_id = #{departmentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDGoodwordsById" parameterType="Long">
+        delete from d_goodwords where id = #{id}
+    </delete>
+
+    <delete id="deleteDGoodwordsByIds" parameterType="String">
+        delete from d_goodwords where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

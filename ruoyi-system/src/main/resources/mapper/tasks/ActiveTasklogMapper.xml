@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tasks.mapper.ActiveTasklogMapper">
+    
+    <resultMap type="ActiveTasklog" id="ActiveTasklogResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectActiveTasklogVo">
+        select id, isUsed, create_time, update_time, remarks, task_id, user_id, status from active_tasklog
+    </sql>
+
+    <select id="selectActiveTasklogList" parameterType="ActiveTasklog" resultMap="ActiveTasklogResult">
+        <include refid="selectActiveTasklogVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectActiveTasklogById" parameterType="Long" resultMap="ActiveTasklogResult">
+        <include refid="selectActiveTasklogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertActiveTasklog" parameterType="ActiveTasklog" useGeneratedKeys="true" keyProperty="id">
+        insert into active_tasklog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateActiveTasklog" parameterType="ActiveTasklog">
+        update active_tasklog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteActiveTasklogById" parameterType="Long">
+        delete from active_tasklog where id = #{id}
+    </delete>
+
+    <delete id="deleteActiveTasklogByIds" parameterType="String">
+        delete from active_tasklog where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

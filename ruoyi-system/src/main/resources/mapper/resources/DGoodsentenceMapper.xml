@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.DGoodsentenceMapper">
+    
+    <resultMap type="DGoodsentence" id="DGoodsentenceResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="gCreateuser"    column="g_createuser"    />
+        <result property="gSentence"    column="g_sentence"    />
+        <result property="departmentId"    column="department_id"    />
+    </resultMap>
+
+    <sql id="selectDGoodsentenceVo">
+        select id, isUsed, create_time, update_time, remarks, g_createuser, g_sentence, department_id from d_goodsentence
+    </sql>
+
+    <select id="selectDGoodsentenceList" parameterType="DGoodsentence" resultMap="DGoodsentenceResult">
+        <include refid="selectDGoodsentenceVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="gCreateuser != null  and gCreateuser != ''"> and g_createuser = #{gCreateuser}</if>
+            <if test="gSentence != null  and gSentence != ''"> and g_sentence = #{gSentence}</if>
+            <if test="departmentId != null "> and department_id = #{departmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDGoodsentenceById" parameterType="Long" resultMap="DGoodsentenceResult">
+        <include refid="selectDGoodsentenceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDGoodsentence" parameterType="DGoodsentence" useGeneratedKeys="true" keyProperty="id">
+        insert into d_goodsentence
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="gCreateuser != null">g_createuser,</if>
+            <if test="gSentence != null">g_sentence,</if>
+            <if test="departmentId != null">department_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="gCreateuser != null">#{gCreateuser},</if>
+            <if test="gSentence != null">#{gSentence},</if>
+            <if test="departmentId != null">#{departmentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDGoodsentence" parameterType="DGoodsentence">
+        update d_goodsentence
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="gCreateuser != null">g_createuser = #{gCreateuser},</if>
+            <if test="gSentence != null">g_sentence = #{gSentence},</if>
+            <if test="departmentId != null">department_id = #{departmentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDGoodsentenceById" parameterType="Long">
+        delete from d_goodsentence where id = #{id}
+    </delete>
+
+    <delete id="deleteDGoodsentenceByIds" parameterType="String">
+        delete from d_goodsentence where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

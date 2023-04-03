@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CAuthorsMapper">
+    
+    <resultMap type="CAuthors" id="CAuthorsResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="aName"    column="a_name"    />
+        <result property="aHead"    column="a_head"    />
+        <result property="aType"    column="a_type"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="school"    column="school"    />
+    </resultMap>
+
+    <sql id="selectCAuthorsVo">
+        select id, isUsed, create_time, update_time, remarks, a_name, a_head, a_type, province, city, area, school from c_authors
+    </sql>
+
+    <select id="selectCAuthorsList" parameterType="CAuthors" resultMap="CAuthorsResult">
+        <include refid="selectCAuthorsVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="aName != null  and aName != ''"> and a_name like concat('%', #{aName}, '%')</if>
+            <if test="aHead != null  and aHead != ''"> and a_head = #{aHead}</if>
+            <if test="aType != null "> and a_type = #{aType}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="school != null  and school != ''"> and school = #{school}</if>
+        </where>
+    </select>
+    
+    <select id="selectCAuthorsById" parameterType="Long" resultMap="CAuthorsResult">
+        <include refid="selectCAuthorsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCAuthors" parameterType="CAuthors" useGeneratedKeys="true" keyProperty="id">
+        insert into c_authors
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="aName != null">a_name,</if>
+            <if test="aHead != null">a_head,</if>
+            <if test="aType != null">a_type,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="area != null">area,</if>
+            <if test="school != null">school,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="aName != null">#{aName},</if>
+            <if test="aHead != null">#{aHead},</if>
+            <if test="aType != null">#{aType},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="area != null">#{area},</if>
+            <if test="school != null">#{school},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCAuthors" parameterType="CAuthors">
+        update c_authors
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="aName != null">a_name = #{aName},</if>
+            <if test="aHead != null">a_head = #{aHead},</if>
+            <if test="aType != null">a_type = #{aType},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="school != null">school = #{school},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCAuthorsById" parameterType="Long">
+        delete from c_authors where id = #{id}
+    </delete>
+
+    <delete id="deleteCAuthorsByIds" parameterType="String">
+        delete from c_authors where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

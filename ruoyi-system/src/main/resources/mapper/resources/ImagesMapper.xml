@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.ImagesMapper">
+    
+    <resultMap type="Images" id="ImagesResult">
+        <result property="id"    column="id"    />
+        <result property="imageB"    column="imageB"    />
+        <result property="imageS"    column="imageS"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectImagesVo">
+        select id, imageB, imageS, type from images
+    </sql>
+
+    <select id="selectImagesList" parameterType="Images" resultMap="ImagesResult">
+        <include refid="selectImagesVo"/>
+        <where>  
+            <if test="imageB != null  and imageB != ''"> and imageB = #{imageB}</if>
+            <if test="imageS != null  and imageS != ''"> and imageS = #{imageS}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectImagesById" parameterType="Long" resultMap="ImagesResult">
+        <include refid="selectImagesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertImages" parameterType="Images" useGeneratedKeys="true" keyProperty="id">
+        insert into images
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imageB != null">imageB,</if>
+            <if test="imageS != null">imageS,</if>
+            <if test="type != null">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imageB != null">#{imageB},</if>
+            <if test="imageS != null">#{imageS},</if>
+            <if test="type != null">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateImages" parameterType="Images">
+        update images
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="imageB != null">imageB = #{imageB},</if>
+            <if test="imageS != null">imageS = #{imageS},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteImagesById" parameterType="Long">
+        delete from images where id = #{id}
+    </delete>
+
+    <delete id="deleteImagesByIds" parameterType="String">
+        delete from images where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

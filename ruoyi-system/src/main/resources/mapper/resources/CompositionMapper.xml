@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CompositionMapper">
+    
+    <resultMap type="Composition" id="CompositionResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="cTitle"    column="c_title"    />
+        <result property="cAuthorid"    column="c_authorId"    />
+        <result property="cSynopsis"    column="c_synopsis"    />
+        <result property="cArticle"    column="c_article"    />
+        <result property="cImageb"    column="c_imageB"    />
+        <result property="cImages"    column="c_imageS"    />
+        <result property="cVoice"    column="c_voice"    />
+        <result property="cVideos"    column="c_videos"    />
+        <result property="cVip"    column="c_vip"    />
+        <result property="cGrade"    column="c_grade"    />
+        <result property="cGatetype"    column="c_gatetype"    />
+        <result property="cWords"    column="c_words"    />
+        <result property="cStatus"    column="c_status"    />
+        <result property="cLikes"    column="c_likes"    />
+        <result property="cDiscuss"    column="c_discuss"    />
+        <result property="cReadtimes"    column="c_readtimes"    />
+    </resultMap>
+
+    <sql id="selectCompositionVo">
+        select id, isUsed, create_time, update_time, remarks, c_title, c_authorId, c_synopsis, c_article, c_imageB, c_imageS, c_voice, c_videos, c_vip, c_grade, c_gatetype, c_words, c_status, c_likes, c_discuss, c_readtimes from composition
+    </sql>
+
+    <select id="selectCompositionList" parameterType="Composition" resultMap="CompositionResult">
+        <include refid="selectCompositionVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="cTitle != null  and cTitle != ''"> and c_title = #{cTitle}</if>
+            <if test="cAuthorid != null "> and c_authorId = #{cAuthorid}</if>
+            <if test="cSynopsis != null  and cSynopsis != ''"> and c_synopsis = #{cSynopsis}</if>
+            <if test="cArticle != null  and cArticle != ''"> and c_article = #{cArticle}</if>
+            <if test="cImageb != null  and cImageb != ''"> and c_imageB = #{cImageb}</if>
+            <if test="cImages != null  and cImages != ''"> and c_imageS = #{cImages}</if>
+            <if test="cVoice != null "> and c_voice = #{cVoice}</if>
+            <if test="cVideos != null "> and c_videos = #{cVideos}</if>
+            <if test="cVip != null "> and c_vip = #{cVip}</if>
+            <if test="cGrade != null  and cGrade != ''"> and c_grade = #{cGrade}</if>
+            <if test="cGatetype != null  and cGatetype != ''"> and c_gatetype = #{cGatetype}</if>
+            <if test="cWords != null "> and c_words = #{cWords}</if>
+            <if test="cStatus != null "> and c_status = #{cStatus}</if>
+            <if test="cLikes != null "> and c_likes = #{cLikes}</if>
+            <if test="cDiscuss != null "> and c_discuss = #{cDiscuss}</if>
+            <if test="cReadtimes != null "> and c_readtimes = #{cReadtimes}</if>
+        </where>
+    </select>
+    
+    <select id="selectCompositionById" parameterType="Long" resultMap="CompositionResult">
+        <include refid="selectCompositionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertComposition" parameterType="Composition" useGeneratedKeys="true" keyProperty="id">
+        insert into composition
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="cTitle != null">c_title,</if>
+            <if test="cAuthorid != null">c_authorId,</if>
+            <if test="cSynopsis != null">c_synopsis,</if>
+            <if test="cArticle != null">c_article,</if>
+            <if test="cImageb != null">c_imageB,</if>
+            <if test="cImages != null">c_imageS,</if>
+            <if test="cVoice != null">c_voice,</if>
+            <if test="cVideos != null">c_videos,</if>
+            <if test="cVip != null">c_vip,</if>
+            <if test="cGrade != null">c_grade,</if>
+            <if test="cGatetype != null">c_gatetype,</if>
+            <if test="cWords != null">c_words,</if>
+            <if test="cStatus != null">c_status,</if>
+            <if test="cLikes != null">c_likes,</if>
+            <if test="cDiscuss != null">c_discuss,</if>
+            <if test="cReadtimes != null">c_readtimes,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="cTitle != null">#{cTitle},</if>
+            <if test="cAuthorid != null">#{cAuthorid},</if>
+            <if test="cSynopsis != null">#{cSynopsis},</if>
+            <if test="cArticle != null">#{cArticle},</if>
+            <if test="cImageb != null">#{cImageb},</if>
+            <if test="cImages != null">#{cImages},</if>
+            <if test="cVoice != null">#{cVoice},</if>
+            <if test="cVideos != null">#{cVideos},</if>
+            <if test="cVip != null">#{cVip},</if>
+            <if test="cGrade != null">#{cGrade},</if>
+            <if test="cGatetype != null">#{cGatetype},</if>
+            <if test="cWords != null">#{cWords},</if>
+            <if test="cStatus != null">#{cStatus},</if>
+            <if test="cLikes != null">#{cLikes},</if>
+            <if test="cDiscuss != null">#{cDiscuss},</if>
+            <if test="cReadtimes != null">#{cReadtimes},</if>
+         </trim>
+    </insert>
+
+    <update id="updateComposition" parameterType="Composition">
+        update composition
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="cTitle != null">c_title = #{cTitle},</if>
+            <if test="cAuthorid != null">c_authorId = #{cAuthorid},</if>
+            <if test="cSynopsis != null">c_synopsis = #{cSynopsis},</if>
+            <if test="cArticle != null">c_article = #{cArticle},</if>
+            <if test="cImageb != null">c_imageB = #{cImageb},</if>
+            <if test="cImages != null">c_imageS = #{cImages},</if>
+            <if test="cVoice != null">c_voice = #{cVoice},</if>
+            <if test="cVideos != null">c_videos = #{cVideos},</if>
+            <if test="cVip != null">c_vip = #{cVip},</if>
+            <if test="cGrade != null">c_grade = #{cGrade},</if>
+            <if test="cGatetype != null">c_gatetype = #{cGatetype},</if>
+            <if test="cWords != null">c_words = #{cWords},</if>
+            <if test="cStatus != null">c_status = #{cStatus},</if>
+            <if test="cLikes != null">c_likes = #{cLikes},</if>
+            <if test="cDiscuss != null">c_discuss = #{cDiscuss},</if>
+            <if test="cReadtimes != null">c_readtimes = #{cReadtimes},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCompositionById" parameterType="Long">
+        delete from composition where id = #{id}
+    </delete>
+
+    <delete id="deleteCompositionByIds" parameterType="String">
+        delete from composition where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

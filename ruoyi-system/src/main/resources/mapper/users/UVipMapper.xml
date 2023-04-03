@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.UVipMapper">
+    
+    <resultMap type="UVip" id="UVipResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="vipType"    column="vip_type"    />
+        <result property="vBegintime"    column="v_begintime"    />
+        <result property="vEndtime"    column="v_endtime"    />
+        <result property="activationCode"    column="activation_code"    />
+    </resultMap>
+
+    <sql id="selectUVipVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, vip_type, v_begintime, v_endtime, activation_code from u_vip
+    </sql>
+
+    <select id="selectUVipList" parameterType="UVip" resultMap="UVipResult">
+        <include refid="selectUVipVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="vipType != null "> and vip_type = #{vipType}</if>
+            <if test="vBegintime != null "> and v_begintime = #{vBegintime}</if>
+            <if test="vEndtime != null "> and v_endtime = #{vEndtime}</if>
+            <if test="activationCode != null  and activationCode != ''"> and activation_code = #{activationCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectUVipById" parameterType="Long" resultMap="UVipResult">
+        <include refid="selectUVipVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUVip" parameterType="UVip" useGeneratedKeys="true" keyProperty="id">
+        insert into u_vip
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="vipType != null">vip_type,</if>
+            <if test="vBegintime != null">v_begintime,</if>
+            <if test="vEndtime != null">v_endtime,</if>
+            <if test="activationCode != null">activation_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="vipType != null">#{vipType},</if>
+            <if test="vBegintime != null">#{vBegintime},</if>
+            <if test="vEndtime != null">#{vEndtime},</if>
+            <if test="activationCode != null">#{activationCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUVip" parameterType="UVip">
+        update u_vip
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="vipType != null">vip_type = #{vipType},</if>
+            <if test="vBegintime != null">v_begintime = #{vBegintime},</if>
+            <if test="vEndtime != null">v_endtime = #{vEndtime},</if>
+            <if test="activationCode != null">activation_code = #{activationCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUVipById" parameterType="Long">
+        delete from u_vip where id = #{id}
+    </delete>
+
+    <delete id="deleteUVipByIds" parameterType="String">
+        delete from u_vip where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

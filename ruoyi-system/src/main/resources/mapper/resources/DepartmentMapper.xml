@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.DepartmentMapper">
+    
+    <resultMap type="Department" id="DepartmentResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="dTitle"    column="d_title"    />
+        <result property="dWords"    column="d_words"    />
+        <result property="dContents"    column="d_contents"    />
+        <result property="dGrade"    column="d_grade"    />
+        <result property="dTerm"    column="d_term"    />
+        <result property="dUnitarea"    column="d_unitarea"    />
+        <result property="dReadtimes"    column="d_readtimes"    />
+        <result property="dImage"    column="d_image"    />
+    </resultMap>
+
+    <sql id="selectDepartmentVo">
+        select id, isUsed, create_time, update_time, remarks, d_title, d_words, d_contents, d_grade, d_term, d_unitarea, d_readtimes, d_image from department
+    </sql>
+
+    <select id="selectDepartmentList" parameterType="Department" resultMap="DepartmentResult">
+        <include refid="selectDepartmentVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="dTitle != null  and dTitle != ''"> and d_title = #{dTitle}</if>
+            <if test="dWords != null "> and d_words = #{dWords}</if>
+            <if test="dContents != null  and dContents != ''"> and d_contents = #{dContents}</if>
+            <if test="dGrade != null  and dGrade != ''"> and d_grade = #{dGrade}</if>
+            <if test="dTerm != null  and dTerm != ''"> and d_term = #{dTerm}</if>
+            <if test="dUnitarea != null  and dUnitarea != ''"> and d_unitarea = #{dUnitarea}</if>
+            <if test="dReadtimes != null "> and d_readtimes = #{dReadtimes}</if>
+            <if test="dImage != null  and dImage != ''"> and d_image = #{dImage}</if>
+        </where>
+    </select>
+    
+    <select id="selectDepartmentById" parameterType="Long" resultMap="DepartmentResult">
+        <include refid="selectDepartmentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDepartment" parameterType="Department" useGeneratedKeys="true" keyProperty="id">
+        insert into department
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="dTitle != null">d_title,</if>
+            <if test="dWords != null">d_words,</if>
+            <if test="dContents != null">d_contents,</if>
+            <if test="dGrade != null">d_grade,</if>
+            <if test="dTerm != null">d_term,</if>
+            <if test="dUnitarea != null">d_unitarea,</if>
+            <if test="dReadtimes != null">d_readtimes,</if>
+            <if test="dImage != null">d_image,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="dTitle != null">#{dTitle},</if>
+            <if test="dWords != null">#{dWords},</if>
+            <if test="dContents != null">#{dContents},</if>
+            <if test="dGrade != null">#{dGrade},</if>
+            <if test="dTerm != null">#{dTerm},</if>
+            <if test="dUnitarea != null">#{dUnitarea},</if>
+            <if test="dReadtimes != null">#{dReadtimes},</if>
+            <if test="dImage != null">#{dImage},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDepartment" parameterType="Department">
+        update department
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="dTitle != null">d_title = #{dTitle},</if>
+            <if test="dWords != null">d_words = #{dWords},</if>
+            <if test="dContents != null">d_contents = #{dContents},</if>
+            <if test="dGrade != null">d_grade = #{dGrade},</if>
+            <if test="dTerm != null">d_term = #{dTerm},</if>
+            <if test="dUnitarea != null">d_unitarea = #{dUnitarea},</if>
+            <if test="dReadtimes != null">d_readtimes = #{dReadtimes},</if>
+            <if test="dImage != null">d_image = #{dImage},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDepartmentById" parameterType="Long">
+        delete from department where id = #{id}
+    </delete>
+
+    <delete id="deleteDepartmentByIds" parameterType="String">
+        delete from department where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tasks.mapper.RotationTaskMapper">
+    
+    <resultMap type="RotationTask" id="RotationTaskResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="rTitle"    column="r_title"    />
+        <result property="rImage"    column="r_image"    />
+        <result property="rType"    column="r_type"    />
+        <result property="rUrl"    column="r_url"    />
+        <result property="rEndtime"    column="r_endtime"    />
+    </resultMap>
+
+    <sql id="selectRotationTaskVo">
+        select id, isUsed, create_time, update_time, remarks, r_title, r_image, r_type, r_url, r_endtime from rotation_task
+    </sql>
+
+    <select id="selectRotationTaskList" parameterType="RotationTask" resultMap="RotationTaskResult">
+        <include refid="selectRotationTaskVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="rTitle != null  and rTitle != ''"> and r_title = #{rTitle}</if>
+            <if test="rImage != null  and rImage != ''"> and r_image = #{rImage}</if>
+            <if test="rType != null "> and r_type = #{rType}</if>
+            <if test="rUrl != null  and rUrl != ''"> and r_url = #{rUrl}</if>
+            <if test="rEndtime != null "> and r_endtime = #{rEndtime}</if>
+        </where>
+    </select>
+    
+    <select id="selectRotationTaskById" parameterType="Long" resultMap="RotationTaskResult">
+        <include refid="selectRotationTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRotationTask" parameterType="RotationTask" useGeneratedKeys="true" keyProperty="id">
+        insert into rotation_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="rTitle != null">r_title,</if>
+            <if test="rImage != null">r_image,</if>
+            <if test="rType != null">r_type,</if>
+            <if test="rUrl != null">r_url,</if>
+            <if test="rEndtime != null">r_endtime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="rTitle != null">#{rTitle},</if>
+            <if test="rImage != null">#{rImage},</if>
+            <if test="rType != null">#{rType},</if>
+            <if test="rUrl != null">#{rUrl},</if>
+            <if test="rEndtime != null">#{rEndtime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRotationTask" parameterType="RotationTask">
+        update rotation_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="rTitle != null">r_title = #{rTitle},</if>
+            <if test="rImage != null">r_image = #{rImage},</if>
+            <if test="rType != null">r_type = #{rType},</if>
+            <if test="rUrl != null">r_url = #{rUrl},</if>
+            <if test="rEndtime != null">r_endtime = #{rEndtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRotationTaskById" parameterType="Long">
+        delete from rotation_task where id = #{id}
+    </delete>
+
+    <delete id="deleteRotationTaskByIds" parameterType="String">
+        delete from rotation_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

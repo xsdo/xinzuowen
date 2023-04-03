@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.USignMapper">
+    
+    <resultMap type="USign" id="USignResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="continueDays"    column="continue_days"    />
+    </resultMap>
+
+    <sql id="selectUSignVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, continue_days from u_sign
+    </sql>
+
+    <select id="selectUSignList" parameterType="USign" resultMap="USignResult">
+        <include refid="selectUSignVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="continueDays != null "> and continue_days = #{continueDays}</if>
+        </where>
+    </select>
+    
+    <select id="selectUSignById" parameterType="Long" resultMap="USignResult">
+        <include refid="selectUSignVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUSign" parameterType="USign" useGeneratedKeys="true" keyProperty="id">
+        insert into u_sign
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="continueDays != null">continue_days,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="continueDays != null">#{continueDays},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUSign" parameterType="USign">
+        update u_sign
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="continueDays != null">continue_days = #{continueDays},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUSignById" parameterType="Long">
+        delete from u_sign where id = #{id}
+    </delete>
+
+    <delete id="deleteUSignByIds" parameterType="String">
+        delete from u_sign where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

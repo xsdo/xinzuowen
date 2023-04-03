@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.MagazinesMapper">
+    
+    <resultMap type="Magazines" id="MagazinesResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="titles"    column="titles"    />
+        <result property="readTime"    column="readTime"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="tryVip"    column="tryVip"    />
+        <result property="image"    column="image"    />
+    </resultMap>
+
+    <sql id="selectMagazinesVo">
+        select id, isUsed, create_time, update_time, remarks, titles, readTime, name, type, tryVip, image from magazines
+    </sql>
+
+    <select id="selectMagazinesList" parameterType="Magazines" resultMap="MagazinesResult">
+        <include refid="selectMagazinesVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="titles != null  and titles != ''"> and titles = #{titles}</if>
+            <if test="readTime != null "> and readTime = #{readTime}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="tryVip != null "> and tryVip = #{tryVip}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+        </where>
+    </select>
+    
+    <select id="selectMagazinesById" parameterType="Long" resultMap="MagazinesResult">
+        <include refid="selectMagazinesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMagazines" parameterType="Magazines" useGeneratedKeys="true" keyProperty="id">
+        insert into magazines
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="titles != null">titles,</if>
+            <if test="readTime != null">readTime,</if>
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="tryVip != null">tryVip,</if>
+            <if test="image != null">image,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="titles != null">#{titles},</if>
+            <if test="readTime != null">#{readTime},</if>
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="tryVip != null">#{tryVip},</if>
+            <if test="image != null">#{image},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMagazines" parameterType="Magazines">
+        update magazines
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="titles != null">titles = #{titles},</if>
+            <if test="readTime != null">readTime = #{readTime},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="tryVip != null">tryVip = #{tryVip},</if>
+            <if test="image != null">image = #{image},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMagazinesById" parameterType="Long">
+        delete from magazines where id = #{id}
+    </delete>
+
+    <delete id="deleteMagazinesByIds" parameterType="String">
+        delete from magazines where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

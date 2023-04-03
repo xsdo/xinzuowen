@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.UAttributeMapper">
+    
+    <resultMap type="UAttribute" id="UAttributeResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="sex"    column="sex"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="portrait"    column="portrait"    />
+        <result property="qqnum"    column="qqnum"    />
+        <result property="wechatnum"    column="wechatnum"    />
+        <result property="email"    column="email"    />
+        <result property="uType"    column="u_type"    />
+        <result property="uTableuse"    column="u_tableUse"    />
+        <result property="uTableids"    column="u_tableIds"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="school"    column="school"    />
+        <result property="isAuth"    column="is_auth"    />
+        <result property="sign"    column="sign"    />
+        <result property="background"    column="background"    />
+        <result property="teacherid"    column="teacherid"    />
+        <result property="isgoodcommons"    column="isgoodcommons"    />
+        <result property="integral"    column="integral"    />
+    </resultMap>
+
+    <sql id="selectUAttributeVo">
+        select id, isUsed, create_time, update_time, remarks, sex, birthday, portrait, qqnum, wechatnum, email, u_type, u_tableUse, u_tableIds, province, city, area, school, is_auth, sign, background, teacherid, isgoodcommons, integral from u_attribute
+    </sql>
+
+    <select id="selectUAttributeList" parameterType="UAttribute" resultMap="UAttributeResult">
+        <include refid="selectUAttributeVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="portrait != null  and portrait != ''"> and portrait = #{portrait}</if>
+            <if test="qqnum != null  and qqnum != ''"> and qqnum = #{qqnum}</if>
+            <if test="wechatnum != null  and wechatnum != ''"> and wechatnum = #{wechatnum}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="uType != null "> and u_type = #{uType}</if>
+            <if test="uTableuse != null "> and u_tableUse = #{uTableuse}</if>
+            <if test="uTableids != null  and uTableids != ''"> and u_tableIds = #{uTableids}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="school != null  and school != ''"> and school = #{school}</if>
+            <if test="isAuth != null "> and is_auth = #{isAuth}</if>
+            <if test="sign != null  and sign != ''"> and sign = #{sign}</if>
+            <if test="background != null  and background != ''"> and background = #{background}</if>
+            <if test="teacherid != null "> and teacherid = #{teacherid}</if>
+            <if test="isgoodcommons != null "> and isgoodcommons = #{isgoodcommons}</if>
+            <if test="integral != null "> and integral = #{integral}</if>
+        </where>
+    </select>
+    
+    <select id="selectUAttributeById" parameterType="Long" resultMap="UAttributeResult">
+        <include refid="selectUAttributeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUAttribute" parameterType="UAttribute" useGeneratedKeys="true" keyProperty="id">
+        insert into u_attribute
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="sex != null">sex,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="portrait != null">portrait,</if>
+            <if test="qqnum != null">qqnum,</if>
+            <if test="wechatnum != null">wechatnum,</if>
+            <if test="email != null">email,</if>
+            <if test="uType != null">u_type,</if>
+            <if test="uTableuse != null">u_tableUse,</if>
+            <if test="uTableids != null">u_tableIds,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="area != null">area,</if>
+            <if test="school != null">school,</if>
+            <if test="isAuth != null">is_auth,</if>
+            <if test="sign != null">sign,</if>
+            <if test="background != null">background,</if>
+            <if test="teacherid != null">teacherid,</if>
+            <if test="isgoodcommons != null">isgoodcommons,</if>
+            <if test="integral != null">integral,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="portrait != null">#{portrait},</if>
+            <if test="qqnum != null">#{qqnum},</if>
+            <if test="wechatnum != null">#{wechatnum},</if>
+            <if test="email != null">#{email},</if>
+            <if test="uType != null">#{uType},</if>
+            <if test="uTableuse != null">#{uTableuse},</if>
+            <if test="uTableids != null">#{uTableids},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="area != null">#{area},</if>
+            <if test="school != null">#{school},</if>
+            <if test="isAuth != null">#{isAuth},</if>
+            <if test="sign != null">#{sign},</if>
+            <if test="background != null">#{background},</if>
+            <if test="teacherid != null">#{teacherid},</if>
+            <if test="isgoodcommons != null">#{isgoodcommons},</if>
+            <if test="integral != null">#{integral},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUAttribute" parameterType="UAttribute">
+        update u_attribute
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="portrait != null">portrait = #{portrait},</if>
+            <if test="qqnum != null">qqnum = #{qqnum},</if>
+            <if test="wechatnum != null">wechatnum = #{wechatnum},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="uType != null">u_type = #{uType},</if>
+            <if test="uTableuse != null">u_tableUse = #{uTableuse},</if>
+            <if test="uTableids != null">u_tableIds = #{uTableids},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="school != null">school = #{school},</if>
+            <if test="isAuth != null">is_auth = #{isAuth},</if>
+            <if test="sign != null">sign = #{sign},</if>
+            <if test="background != null">background = #{background},</if>
+            <if test="teacherid != null">teacherid = #{teacherid},</if>
+            <if test="isgoodcommons != null">isgoodcommons = #{isgoodcommons},</if>
+            <if test="integral != null">integral = #{integral},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUAttributeById" parameterType="Long">
+        delete from u_attribute where id = #{id}
+    </delete>
+
+    <delete id="deleteUAttributeByIds" parameterType="String">
+        delete from u_attribute where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

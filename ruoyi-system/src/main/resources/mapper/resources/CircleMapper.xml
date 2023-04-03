@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CircleMapper">
+    
+    <resultMap type="Circle" id="CircleResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="userHead"    column="user_head"    />
+        <result property="userTable"    column="user_table"    />
+        <result property="content"    column="content"    />
+        <result property="discuss"    column="discuss"    />
+        <result property="likes"    column="likes"    />
+        <result property="type"    column="type"    />
+        <result property="compositionId"    column="composition_id"    />
+    </resultMap>
+
+    <sql id="selectCircleVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, user_name, user_head, user_table, content, discuss, likes, type, composition_id from circle
+    </sql>
+
+    <select id="selectCircleList" parameterType="Circle" resultMap="CircleResult">
+        <include refid="selectCircleVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="userHead != null  and userHead != ''"> and user_head = #{userHead}</if>
+            <if test="userTable != null  and userTable != ''"> and user_table = #{userTable}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="discuss != null "> and discuss = #{discuss}</if>
+            <if test="likes != null "> and likes = #{likes}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="compositionId != null "> and composition_id = #{compositionId}</if>
+        </where>
+    </select>
+    
+    <select id="selectCircleById" parameterType="Long" resultMap="CircleResult">
+        <include refid="selectCircleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCircle" parameterType="Circle" useGeneratedKeys="true" keyProperty="id">
+        insert into circle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="userHead != null">user_head,</if>
+            <if test="userTable != null">user_table,</if>
+            <if test="content != null">content,</if>
+            <if test="discuss != null">discuss,</if>
+            <if test="likes != null">likes,</if>
+            <if test="type != null">type,</if>
+            <if test="compositionId != null">composition_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="userHead != null">#{userHead},</if>
+            <if test="userTable != null">#{userTable},</if>
+            <if test="content != null">#{content},</if>
+            <if test="discuss != null">#{discuss},</if>
+            <if test="likes != null">#{likes},</if>
+            <if test="type != null">#{type},</if>
+            <if test="compositionId != null">#{compositionId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCircle" parameterType="Circle">
+        update circle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userHead != null">user_head = #{userHead},</if>
+            <if test="userTable != null">user_table = #{userTable},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="discuss != null">discuss = #{discuss},</if>
+            <if test="likes != null">likes = #{likes},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="compositionId != null">composition_id = #{compositionId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCircleById" parameterType="Long">
+        delete from circle where id = #{id}
+    </delete>
+
+    <delete id="deleteCircleByIds" parameterType="String">
+        delete from circle where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

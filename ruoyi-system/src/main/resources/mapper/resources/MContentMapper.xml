@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.MContentMapper">
+    
+    <resultMap type="MContent" id="MContentResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="magazinesId"    column="magazines_id"    />
+        <result property="titles"    column="titles"    />
+        <result property="content"    column="content"    />
+        <result property="tryVip"    column="tryVip"    />
+        <result property="compositionId"    column="composition_id"    />
+    </resultMap>
+
+    <sql id="selectMContentVo">
+        select id, isUsed, create_time, update_time, remarks, magazines_id, titles, content, tryVip, composition_id from m_content
+    </sql>
+
+    <select id="selectMContentList" parameterType="MContent" resultMap="MContentResult">
+        <include refid="selectMContentVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="magazinesId != null "> and magazines_id = #{magazinesId}</if>
+            <if test="titles != null  and titles != ''"> and titles = #{titles}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="tryVip != null "> and tryVip = #{tryVip}</if>
+            <if test="compositionId != null "> and composition_id = #{compositionId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMContentById" parameterType="Long" resultMap="MContentResult">
+        <include refid="selectMContentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMContent" parameterType="MContent" useGeneratedKeys="true" keyProperty="id">
+        insert into m_content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="magazinesId != null">magazines_id,</if>
+            <if test="titles != null">titles,</if>
+            <if test="content != null">content,</if>
+            <if test="tryVip != null">tryVip,</if>
+            <if test="compositionId != null">composition_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="magazinesId != null">#{magazinesId},</if>
+            <if test="titles != null">#{titles},</if>
+            <if test="content != null">#{content},</if>
+            <if test="tryVip != null">#{tryVip},</if>
+            <if test="compositionId != null">#{compositionId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMContent" parameterType="MContent">
+        update m_content
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="magazinesId != null">magazines_id = #{magazinesId},</if>
+            <if test="titles != null">titles = #{titles},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="tryVip != null">tryVip = #{tryVip},</if>
+            <if test="compositionId != null">composition_id = #{compositionId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMContentById" parameterType="Long">
+        delete from m_content where id = #{id}
+    </delete>
+
+    <delete id="deleteMContentByIds" parameterType="String">
+        delete from m_content where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

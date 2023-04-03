@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tasks.mapper.SuggestTaskMapper">
+    
+    <resultMap type="SuggestTask" id="SuggestTaskResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="compositionId"    column="composition_id"    />
+        <result property="compositionType"    column="composition_type"    />
+        <result property="comName"    column="com_name"    />
+        <result property="comImage"    column="com_image"    />
+        <result property="comLikes"    column="com_likes"    />
+        <result property="comDiscuss"    column="com_discuss"    />
+        <result property="tTop"    column="t_top"    />
+        <result property="tEndtime"    column="t_endtime"    />
+    </resultMap>
+
+    <sql id="selectSuggestTaskVo">
+        select id, isUsed, create_time, update_time, remarks, composition_id, composition_type, com_name, com_image, com_likes, com_discuss, t_top, t_endtime from suggest_task
+    </sql>
+
+    <select id="selectSuggestTaskList" parameterType="SuggestTask" resultMap="SuggestTaskResult">
+        <include refid="selectSuggestTaskVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="compositionId != null "> and composition_id = #{compositionId}</if>
+            <if test="compositionType != null  and compositionType != ''"> and composition_type = #{compositionType}</if>
+            <if test="comName != null  and comName != ''"> and com_name like concat('%', #{comName}, '%')</if>
+            <if test="comImage != null  and comImage != ''"> and com_image = #{comImage}</if>
+            <if test="comLikes != null "> and com_likes = #{comLikes}</if>
+            <if test="comDiscuss != null "> and com_discuss = #{comDiscuss}</if>
+            <if test="tTop != null "> and t_top = #{tTop}</if>
+            <if test="tEndtime != null "> and t_endtime = #{tEndtime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSuggestTaskById" parameterType="Long" resultMap="SuggestTaskResult">
+        <include refid="selectSuggestTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSuggestTask" parameterType="SuggestTask" useGeneratedKeys="true" keyProperty="id">
+        insert into suggest_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="compositionId != null">composition_id,</if>
+            <if test="compositionType != null">composition_type,</if>
+            <if test="comName != null">com_name,</if>
+            <if test="comImage != null">com_image,</if>
+            <if test="comLikes != null">com_likes,</if>
+            <if test="comDiscuss != null">com_discuss,</if>
+            <if test="tTop != null">t_top,</if>
+            <if test="tEndtime != null">t_endtime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="compositionId != null">#{compositionId},</if>
+            <if test="compositionType != null">#{compositionType},</if>
+            <if test="comName != null">#{comName},</if>
+            <if test="comImage != null">#{comImage},</if>
+            <if test="comLikes != null">#{comLikes},</if>
+            <if test="comDiscuss != null">#{comDiscuss},</if>
+            <if test="tTop != null">#{tTop},</if>
+            <if test="tEndtime != null">#{tEndtime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSuggestTask" parameterType="SuggestTask">
+        update suggest_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="compositionId != null">composition_id = #{compositionId},</if>
+            <if test="compositionType != null">composition_type = #{compositionType},</if>
+            <if test="comName != null">com_name = #{comName},</if>
+            <if test="comImage != null">com_image = #{comImage},</if>
+            <if test="comLikes != null">com_likes = #{comLikes},</if>
+            <if test="comDiscuss != null">com_discuss = #{comDiscuss},</if>
+            <if test="tTop != null">t_top = #{tTop},</if>
+            <if test="tEndtime != null">t_endtime = #{tEndtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSuggestTaskById" parameterType="Long">
+        delete from suggest_task where id = #{id}
+    </delete>
+
+    <delete id="deleteSuggestTaskByIds" parameterType="String">
+        delete from suggest_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

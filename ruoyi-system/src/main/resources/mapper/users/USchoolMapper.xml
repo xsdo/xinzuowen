@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.USchoolMapper">
+    
+    <resultMap type="USchool" id="USchoolResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="sName"    column="s_name"    />
+        <result property="sProvince"    column="s_province"    />
+        <result property="sCity"    column="s_city"    />
+        <result property="sArea"    column="s_area"    />
+        <result property="sFlowers"    column="s_flowers"    />
+        <result property="qrCode"    column="qr_code"    />
+    </resultMap>
+
+    <sql id="selectUSchoolVo">
+        select id, isUsed, create_time, update_time, remarks, s_name, s_province, s_city, s_area, s_flowers, qr_code from u_school
+    </sql>
+
+    <select id="selectUSchoolList" parameterType="USchool" resultMap="USchoolResult">
+        <include refid="selectUSchoolVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="sName != null  and sName != ''"> and s_name like concat('%', #{sName}, '%')</if>
+            <if test="sProvince != null  and sProvince != ''"> and s_province = #{sProvince}</if>
+            <if test="sCity != null  and sCity != ''"> and s_city = #{sCity}</if>
+            <if test="sArea != null  and sArea != ''"> and s_area = #{sArea}</if>
+            <if test="sFlowers != null "> and s_flowers = #{sFlowers}</if>
+            <if test="qrCode != null  and qrCode != ''"> and qr_code = #{qrCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectUSchoolById" parameterType="Long" resultMap="USchoolResult">
+        <include refid="selectUSchoolVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUSchool" parameterType="USchool" useGeneratedKeys="true" keyProperty="id">
+        insert into u_school
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="sName != null">s_name,</if>
+            <if test="sProvince != null">s_province,</if>
+            <if test="sCity != null">s_city,</if>
+            <if test="sArea != null">s_area,</if>
+            <if test="sFlowers != null">s_flowers,</if>
+            <if test="qrCode != null">qr_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="sName != null">#{sName},</if>
+            <if test="sProvince != null">#{sProvince},</if>
+            <if test="sCity != null">#{sCity},</if>
+            <if test="sArea != null">#{sArea},</if>
+            <if test="sFlowers != null">#{sFlowers},</if>
+            <if test="qrCode != null">#{qrCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUSchool" parameterType="USchool">
+        update u_school
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="sName != null">s_name = #{sName},</if>
+            <if test="sProvince != null">s_province = #{sProvince},</if>
+            <if test="sCity != null">s_city = #{sCity},</if>
+            <if test="sArea != null">s_area = #{sArea},</if>
+            <if test="sFlowers != null">s_flowers = #{sFlowers},</if>
+            <if test="qrCode != null">qr_code = #{qrCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUSchoolById" parameterType="Long">
+        delete from u_school where id = #{id}
+    </delete>
+
+    <delete id="deleteUSchoolByIds" parameterType="String">
+        delete from u_school where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

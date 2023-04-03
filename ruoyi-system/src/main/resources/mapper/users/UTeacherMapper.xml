@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.UTeacherMapper">
+    
+    <resultMap type="UTeacher" id="UTeacherResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="tName"    column="t_name"    />
+        <result property="tSchoolid"    column="t_schoolid"    />
+        <result property="tGrade"    column="t_grade"    />
+        <result property="tTerm"    column="t_term"    />
+        <result property="qrCode"    column="qr_code"    />
+        <result property="tStudent"    column="t_student"    />
+        <result property="tFlowers"    column="t_flowers"    />
+        <result property="tImage"    column="t_image"    />
+        <result property="teaName"    column="tea_name"    />
+        <result property="teaImage"    column="tea_image"    />
+        <result property="teaSign"    column="tea_sign"    />
+        <result property="tSlogan"    column="t_slogan"    />
+        <result property="writes"    column="writes"    />
+        <result property="readings"    column="readings"    />
+        <result property="readalouds"    column="readalouds"    />
+        <result property="tOpen"    column="t_open"    />
+        <result property="rankings"    column="rankings"    />
+        <result property="teacherId"    column="teacher_id"    />
+    </resultMap>
+
+    <sql id="selectUTeacherVo">
+        select id, isUsed, create_time, update_time, remarks, t_name, t_schoolid, t_grade, t_term, qr_code, t_student, t_flowers, t_image, tea_name, tea_image, tea_sign, t_slogan, writes, readings, readalouds, t_open, rankings, teacher_id from u_teacher
+    </sql>
+
+    <select id="selectUTeacherList" parameterType="UTeacher" resultMap="UTeacherResult">
+        <include refid="selectUTeacherVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="tName != null  and tName != ''"> and t_name like concat('%', #{tName}, '%')</if>
+            <if test="tSchoolid != null "> and t_schoolid = #{tSchoolid}</if>
+            <if test="tGrade != null  and tGrade != ''"> and t_grade = #{tGrade}</if>
+            <if test="tTerm != null  and tTerm != ''"> and t_term = #{tTerm}</if>
+            <if test="qrCode != null  and qrCode != ''"> and qr_code = #{qrCode}</if>
+            <if test="tStudent != null "> and t_student = #{tStudent}</if>
+            <if test="tFlowers != null "> and t_flowers = #{tFlowers}</if>
+            <if test="tImage != null  and tImage != ''"> and t_image = #{tImage}</if>
+            <if test="teaName != null  and teaName != ''"> and tea_name like concat('%', #{teaName}, '%')</if>
+            <if test="teaImage != null  and teaImage != ''"> and tea_image = #{teaImage}</if>
+            <if test="teaSign != null  and teaSign != ''"> and tea_sign = #{teaSign}</if>
+            <if test="tSlogan != null  and tSlogan != ''"> and t_slogan = #{tSlogan}</if>
+            <if test="writes != null "> and writes = #{writes}</if>
+            <if test="readings != null "> and readings = #{readings}</if>
+            <if test="readalouds != null "> and readalouds = #{readalouds}</if>
+            <if test="tOpen != null "> and t_open = #{tOpen}</if>
+            <if test="rankings != null "> and rankings = #{rankings}</if>
+            <if test="teacherId != null "> and teacher_id = #{teacherId}</if>
+        </where>
+    </select>
+    
+    <select id="selectUTeacherById" parameterType="Long" resultMap="UTeacherResult">
+        <include refid="selectUTeacherVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUTeacher" parameterType="UTeacher" useGeneratedKeys="true" keyProperty="id">
+        insert into u_teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="tName != null">t_name,</if>
+            <if test="tSchoolid != null">t_schoolid,</if>
+            <if test="tGrade != null">t_grade,</if>
+            <if test="tTerm != null">t_term,</if>
+            <if test="qrCode != null">qr_code,</if>
+            <if test="tStudent != null">t_student,</if>
+            <if test="tFlowers != null">t_flowers,</if>
+            <if test="tImage != null">t_image,</if>
+            <if test="teaName != null">tea_name,</if>
+            <if test="teaImage != null">tea_image,</if>
+            <if test="teaSign != null">tea_sign,</if>
+            <if test="tSlogan != null">t_slogan,</if>
+            <if test="writes != null">writes,</if>
+            <if test="readings != null">readings,</if>
+            <if test="readalouds != null">readalouds,</if>
+            <if test="tOpen != null">t_open,</if>
+            <if test="rankings != null">rankings,</if>
+            <if test="teacherId != null">teacher_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="tName != null">#{tName},</if>
+            <if test="tSchoolid != null">#{tSchoolid},</if>
+            <if test="tGrade != null">#{tGrade},</if>
+            <if test="tTerm != null">#{tTerm},</if>
+            <if test="qrCode != null">#{qrCode},</if>
+            <if test="tStudent != null">#{tStudent},</if>
+            <if test="tFlowers != null">#{tFlowers},</if>
+            <if test="tImage != null">#{tImage},</if>
+            <if test="teaName != null">#{teaName},</if>
+            <if test="teaImage != null">#{teaImage},</if>
+            <if test="teaSign != null">#{teaSign},</if>
+            <if test="tSlogan != null">#{tSlogan},</if>
+            <if test="writes != null">#{writes},</if>
+            <if test="readings != null">#{readings},</if>
+            <if test="readalouds != null">#{readalouds},</if>
+            <if test="tOpen != null">#{tOpen},</if>
+            <if test="rankings != null">#{rankings},</if>
+            <if test="teacherId != null">#{teacherId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUTeacher" parameterType="UTeacher">
+        update u_teacher
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="tName != null">t_name = #{tName},</if>
+            <if test="tSchoolid != null">t_schoolid = #{tSchoolid},</if>
+            <if test="tGrade != null">t_grade = #{tGrade},</if>
+            <if test="tTerm != null">t_term = #{tTerm},</if>
+            <if test="qrCode != null">qr_code = #{qrCode},</if>
+            <if test="tStudent != null">t_student = #{tStudent},</if>
+            <if test="tFlowers != null">t_flowers = #{tFlowers},</if>
+            <if test="tImage != null">t_image = #{tImage},</if>
+            <if test="teaName != null">tea_name = #{teaName},</if>
+            <if test="teaImage != null">tea_image = #{teaImage},</if>
+            <if test="teaSign != null">tea_sign = #{teaSign},</if>
+            <if test="tSlogan != null">t_slogan = #{tSlogan},</if>
+            <if test="writes != null">writes = #{writes},</if>
+            <if test="readings != null">readings = #{readings},</if>
+            <if test="readalouds != null">readalouds = #{readalouds},</if>
+            <if test="tOpen != null">t_open = #{tOpen},</if>
+            <if test="rankings != null">rankings = #{rankings},</if>
+            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUTeacherById" parameterType="Long">
+        delete from u_teacher where id = #{id}
+    </delete>
+
+    <delete id="deleteUTeacherByIds" parameterType="String">
+        delete from u_teacher where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

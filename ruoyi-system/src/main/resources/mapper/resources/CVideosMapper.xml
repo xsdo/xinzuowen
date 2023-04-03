@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CVideosMapper">
+    
+    <resultMap type="CVideos" id="CVideosResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="vName"    column="v_name"    />
+        <result property="vTeacher"    column="v_teacher"    />
+        <result property="vVideos"    column="v_videos"    />
+        <result property="vType"    column="v_type"    />
+        <result property="vRank"    column="v_rank"    />
+        <result property="vDescription"    column="v_description"    />
+        <result property="vTime"    column="v_time"    />
+        <result property="vGrade"    column="v_grade"    />
+        <result property="vTerm"    column="v_term"    />
+        <result property="vUnitarea"    column="v_unitarea"    />
+        <result property="vImage"    column="v_image"    />
+    </resultMap>
+
+    <sql id="selectCVideosVo">
+        select id, isUsed, create_time, update_time, remarks, v_name, v_teacher, v_videos, v_type, v_rank, v_description, v_time, v_grade, v_term, v_unitarea, v_image from c_videos
+    </sql>
+
+    <select id="selectCVideosList" parameterType="CVideos" resultMap="CVideosResult">
+        <include refid="selectCVideosVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="vName != null  and vName != ''"> and v_name like concat('%', #{vName}, '%')</if>
+            <if test="vTeacher != null  and vTeacher != ''"> and v_teacher = #{vTeacher}</if>
+            <if test="vVideos != null  and vVideos != ''"> and v_videos = #{vVideos}</if>
+            <if test="vType != null "> and v_type = #{vType}</if>
+            <if test="vRank != null  and vRank != ''"> and v_rank = #{vRank}</if>
+            <if test="vDescription != null  and vDescription != ''"> and v_description = #{vDescription}</if>
+            <if test="vTime != null  and vTime != ''"> and v_time = #{vTime}</if>
+            <if test="vGrade != null  and vGrade != ''"> and v_grade = #{vGrade}</if>
+            <if test="vTerm != null  and vTerm != ''"> and v_term = #{vTerm}</if>
+            <if test="vUnitarea != null  and vUnitarea != ''"> and v_unitarea = #{vUnitarea}</if>
+            <if test="vImage != null  and vImage != ''"> and v_image = #{vImage}</if>
+        </where>
+    </select>
+    
+    <select id="selectCVideosById" parameterType="Long" resultMap="CVideosResult">
+        <include refid="selectCVideosVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCVideos" parameterType="CVideos" useGeneratedKeys="true" keyProperty="id">
+        insert into c_videos
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="vName != null">v_name,</if>
+            <if test="vTeacher != null">v_teacher,</if>
+            <if test="vVideos != null">v_videos,</if>
+            <if test="vType != null">v_type,</if>
+            <if test="vRank != null">v_rank,</if>
+            <if test="vDescription != null">v_description,</if>
+            <if test="vTime != null">v_time,</if>
+            <if test="vGrade != null">v_grade,</if>
+            <if test="vTerm != null">v_term,</if>
+            <if test="vUnitarea != null">v_unitarea,</if>
+            <if test="vImage != null">v_image,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="vName != null">#{vName},</if>
+            <if test="vTeacher != null">#{vTeacher},</if>
+            <if test="vVideos != null">#{vVideos},</if>
+            <if test="vType != null">#{vType},</if>
+            <if test="vRank != null">#{vRank},</if>
+            <if test="vDescription != null">#{vDescription},</if>
+            <if test="vTime != null">#{vTime},</if>
+            <if test="vGrade != null">#{vGrade},</if>
+            <if test="vTerm != null">#{vTerm},</if>
+            <if test="vUnitarea != null">#{vUnitarea},</if>
+            <if test="vImage != null">#{vImage},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCVideos" parameterType="CVideos">
+        update c_videos
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="vName != null">v_name = #{vName},</if>
+            <if test="vTeacher != null">v_teacher = #{vTeacher},</if>
+            <if test="vVideos != null">v_videos = #{vVideos},</if>
+            <if test="vType != null">v_type = #{vType},</if>
+            <if test="vRank != null">v_rank = #{vRank},</if>
+            <if test="vDescription != null">v_description = #{vDescription},</if>
+            <if test="vTime != null">v_time = #{vTime},</if>
+            <if test="vGrade != null">v_grade = #{vGrade},</if>
+            <if test="vTerm != null">v_term = #{vTerm},</if>
+            <if test="vUnitarea != null">v_unitarea = #{vUnitarea},</if>
+            <if test="vImage != null">v_image = #{vImage},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCVideosById" parameterType="Long">
+        delete from c_videos where id = #{id}
+    </delete>
+
+    <delete id="deleteCVideosByIds" parameterType="String">
+        delete from c_videos where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.XzwUserMapper">
+    
+    <resultMap type="XzwUser" id="XzwUserResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="uuid"    column="uuid"    />
+        <result property="userName"    column="user_name"    />
+        <result property="loginName"    column="login_name"    />
+        <result property="loginPwd"    column="login_pwd"    />
+        <result property="attributeId"    column="attributeId"    />
+        <result property="openId"    column="open_id"    />
+        <result property="phoneNumber"    column="phone_number"    />
+    </resultMap>
+
+    <sql id="selectXzwUserVo">
+        select id, isUsed, create_time, update_time, remarks, uuid, user_name, login_name, login_pwd, attributeId, open_id, phone_number from xzw_user
+    </sql>
+
+    <select id="selectXzwUserList" parameterType="XzwUser" resultMap="XzwUserResult">
+        <include refid="selectXzwUserVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="uuid != null  and uuid != ''"> and uuid = #{uuid}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="loginName != null  and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
+            <if test="loginPwd != null  and loginPwd != ''"> and login_pwd = #{loginPwd}</if>
+            <if test="attributeId != null "> and attributeId = #{attributeId}</if>
+            <if test="openId != null  and openId != ''"> and open_id = #{openId}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectXzwUserById" parameterType="Long" resultMap="XzwUserResult">
+        <include refid="selectXzwUserVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertXzwUser" parameterType="XzwUser" useGeneratedKeys="true" keyProperty="id">
+        insert into xzw_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="uuid != null">uuid,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="loginName != null">login_name,</if>
+            <if test="loginPwd != null">login_pwd,</if>
+            <if test="attributeId != null">attributeId,</if>
+            <if test="openId != null">open_id,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="uuid != null">#{uuid},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="loginName != null">#{loginName},</if>
+            <if test="loginPwd != null">#{loginPwd},</if>
+            <if test="attributeId != null">#{attributeId},</if>
+            <if test="openId != null">#{openId},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXzwUser" parameterType="XzwUser">
+        update xzw_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="uuid != null">uuid = #{uuid},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="loginName != null">login_name = #{loginName},</if>
+            <if test="loginPwd != null">login_pwd = #{loginPwd},</if>
+            <if test="attributeId != null">attributeId = #{attributeId},</if>
+            <if test="openId != null">open_id = #{openId},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXzwUserById" parameterType="Long">
+        delete from xzw_user where id = #{id}
+    </delete>
+
+    <delete id="deleteXzwUserByIds" parameterType="String">
+        delete from xzw_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

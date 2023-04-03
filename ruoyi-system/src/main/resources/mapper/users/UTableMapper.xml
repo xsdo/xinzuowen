@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.UTableMapper">
+    
+    <resultMap type="UTable" id="UTableResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="uTableName"    column="u_table_name"    />
+        <result property="uTablePattern"    column="u_table_pattern"    />
+        <result property="uTableType"    column="u_table_type"    />
+        <result property="uTableSource"    column="u_table_source"    />
+        <result property="uTableDescribe"    column="u_table_describe"    />
+    </resultMap>
+
+    <sql id="selectUTableVo">
+        select id, isUsed, create_time, update_time, remarks, u_table_name, u_table_pattern, u_table_type, u_table_source, u_table_describe from u_table
+    </sql>
+
+    <select id="selectUTableList" parameterType="UTable" resultMap="UTableResult">
+        <include refid="selectUTableVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="uTableName != null  and uTableName != ''"> and u_table_name like concat('%', #{uTableName}, '%')</if>
+            <if test="uTablePattern != null  and uTablePattern != ''"> and u_table_pattern = #{uTablePattern}</if>
+            <if test="uTableType != null "> and u_table_type = #{uTableType}</if>
+            <if test="uTableSource != null  and uTableSource != ''"> and u_table_source = #{uTableSource}</if>
+            <if test="uTableDescribe != null  and uTableDescribe != ''"> and u_table_describe = #{uTableDescribe}</if>
+        </where>
+    </select>
+    
+    <select id="selectUTableById" parameterType="Long" resultMap="UTableResult">
+        <include refid="selectUTableVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUTable" parameterType="UTable" useGeneratedKeys="true" keyProperty="id">
+        insert into u_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="uTableName != null">u_table_name,</if>
+            <if test="uTablePattern != null">u_table_pattern,</if>
+            <if test="uTableType != null">u_table_type,</if>
+            <if test="uTableSource != null">u_table_source,</if>
+            <if test="uTableDescribe != null">u_table_describe,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="uTableName != null">#{uTableName},</if>
+            <if test="uTablePattern != null">#{uTablePattern},</if>
+            <if test="uTableType != null">#{uTableType},</if>
+            <if test="uTableSource != null">#{uTableSource},</if>
+            <if test="uTableDescribe != null">#{uTableDescribe},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUTable" parameterType="UTable">
+        update u_table
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="uTableName != null">u_table_name = #{uTableName},</if>
+            <if test="uTablePattern != null">u_table_pattern = #{uTablePattern},</if>
+            <if test="uTableType != null">u_table_type = #{uTableType},</if>
+            <if test="uTableSource != null">u_table_source = #{uTableSource},</if>
+            <if test="uTableDescribe != null">u_table_describe = #{uTableDescribe},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUTableById" parameterType="Long">
+        delete from u_table where id = #{id}
+    </delete>
+
+    <delete id="deleteUTableByIds" parameterType="String">
+        delete from u_table where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

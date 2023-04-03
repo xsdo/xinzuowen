@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.UFollowMapper">
+    
+    <resultMap type="UFollow" id="UFollowResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="followedUser"    column="followed_user"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectUFollowVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, followed_user, status from u_follow
+    </sql>
+
+    <select id="selectUFollowList" parameterType="UFollow" resultMap="UFollowResult">
+        <include refid="selectUFollowVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="followedUser != null "> and followed_user = #{followedUser}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectUFollowById" parameterType="Long" resultMap="UFollowResult">
+        <include refid="selectUFollowVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUFollow" parameterType="UFollow" useGeneratedKeys="true" keyProperty="id">
+        insert into u_follow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="followedUser != null">followed_user,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="followedUser != null">#{followedUser},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUFollow" parameterType="UFollow">
+        update u_follow
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="followedUser != null">followed_user = #{followedUser},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUFollowById" parameterType="Long">
+        delete from u_follow where id = #{id}
+    </delete>
+
+    <delete id="deleteUFollowByIds" parameterType="String">
+        delete from u_follow where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

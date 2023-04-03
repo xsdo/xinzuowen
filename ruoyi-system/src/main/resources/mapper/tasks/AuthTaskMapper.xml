@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tasks.mapper.AuthTaskMapper">
+    
+    <resultMap type="AuthTask" id="AuthTaskResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="aName"    column="a_name"    />
+        <result property="aSynopsis"    column="a_synopsis"    />
+        <result property="aStatus"    column="a_status"    />
+        <result property="aType"    column="a_type"    />
+        <result property="aAward"    column="a_award"    />
+    </resultMap>
+
+    <sql id="selectAuthTaskVo">
+        select id, isUsed, create_time, update_time, remarks, a_name, a_synopsis, a_status, a_type, a_award from auth_task
+    </sql>
+
+    <select id="selectAuthTaskList" parameterType="AuthTask" resultMap="AuthTaskResult">
+        <include refid="selectAuthTaskVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="aName != null  and aName != ''"> and a_name like concat('%', #{aName}, '%')</if>
+            <if test="aSynopsis != null  and aSynopsis != ''"> and a_synopsis = #{aSynopsis}</if>
+            <if test="aStatus != null "> and a_status = #{aStatus}</if>
+            <if test="aType != null  and aType != ''"> and a_type = #{aType}</if>
+            <if test="aAward != null  and aAward != ''"> and a_award = #{aAward}</if>
+        </where>
+    </select>
+    
+    <select id="selectAuthTaskById" parameterType="Long" resultMap="AuthTaskResult">
+        <include refid="selectAuthTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAuthTask" parameterType="AuthTask" useGeneratedKeys="true" keyProperty="id">
+        insert into auth_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="aName != null">a_name,</if>
+            <if test="aSynopsis != null">a_synopsis,</if>
+            <if test="aStatus != null">a_status,</if>
+            <if test="aType != null">a_type,</if>
+            <if test="aAward != null">a_award,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="aName != null">#{aName},</if>
+            <if test="aSynopsis != null">#{aSynopsis},</if>
+            <if test="aStatus != null">#{aStatus},</if>
+            <if test="aType != null">#{aType},</if>
+            <if test="aAward != null">#{aAward},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAuthTask" parameterType="AuthTask">
+        update auth_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="aName != null">a_name = #{aName},</if>
+            <if test="aSynopsis != null">a_synopsis = #{aSynopsis},</if>
+            <if test="aStatus != null">a_status = #{aStatus},</if>
+            <if test="aType != null">a_type = #{aType},</if>
+            <if test="aAward != null">a_award = #{aAward},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAuthTaskById" parameterType="Long">
+        delete from auth_task where id = #{id}
+    </delete>
+
+    <delete id="deleteAuthTaskByIds" parameterType="String">
+        delete from auth_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

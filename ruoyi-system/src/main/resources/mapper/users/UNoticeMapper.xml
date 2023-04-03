@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.UNoticeMapper">
+    
+    <resultMap type="UNotice" id="UNoticeResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="nName"    column="n_name"    />
+        <result property="nType"    column="n_type"    />
+        <result property="readoff"    column="readoff"    />
+        <result property="coment"    column="coment"    />
+    </resultMap>
+
+    <sql id="selectUNoticeVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, n_name, n_type, readoff, coment from u_notice
+    </sql>
+
+    <select id="selectUNoticeList" parameterType="UNotice" resultMap="UNoticeResult">
+        <include refid="selectUNoticeVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="nName != null  and nName != ''"> and n_name like concat('%', #{nName}, '%')</if>
+            <if test="nType != null "> and n_type = #{nType}</if>
+            <if test="readoff != null "> and readoff = #{readoff}</if>
+            <if test="coment != null  and coment != ''"> and coment = #{coment}</if>
+        </where>
+    </select>
+    
+    <select id="selectUNoticeById" parameterType="Long" resultMap="UNoticeResult">
+        <include refid="selectUNoticeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUNotice" parameterType="UNotice" useGeneratedKeys="true" keyProperty="id">
+        insert into u_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="nName != null">n_name,</if>
+            <if test="nType != null">n_type,</if>
+            <if test="readoff != null">readoff,</if>
+            <if test="coment != null">coment,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="nName != null">#{nName},</if>
+            <if test="nType != null">#{nType},</if>
+            <if test="readoff != null">#{readoff},</if>
+            <if test="coment != null">#{coment},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUNotice" parameterType="UNotice">
+        update u_notice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="nName != null">n_name = #{nName},</if>
+            <if test="nType != null">n_type = #{nType},</if>
+            <if test="readoff != null">readoff = #{readoff},</if>
+            <if test="coment != null">coment = #{coment},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUNoticeById" parameterType="Long">
+        delete from u_notice where id = #{id}
+    </delete>
+
+    <delete id="deleteUNoticeByIds" parameterType="String">
+        delete from u_notice where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

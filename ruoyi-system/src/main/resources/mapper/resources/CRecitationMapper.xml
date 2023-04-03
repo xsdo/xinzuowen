@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CRecitationMapper">
+    
+    <resultMap type="CRecitation" id="CRecitationResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="rName"    column="r_name"    />
+        <result property="rHead"    column="r_head"    />
+        <result property="userId"    column="user_id"    />
+        <result property="rDescription"    column="r_description"    />
+    </resultMap>
+
+    <sql id="selectCRecitationVo">
+        select id, isUsed, create_time, update_time, remarks, r_name, r_head, user_id, r_description from c_recitation
+    </sql>
+
+    <select id="selectCRecitationList" parameterType="CRecitation" resultMap="CRecitationResult">
+        <include refid="selectCRecitationVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="rName != null  and rName != ''"> and r_name like concat('%', #{rName}, '%')</if>
+            <if test="rHead != null  and rHead != ''"> and r_head = #{rHead}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="rDescription != null  and rDescription != ''"> and r_description = #{rDescription}</if>
+        </where>
+    </select>
+    
+    <select id="selectCRecitationById" parameterType="Long" resultMap="CRecitationResult">
+        <include refid="selectCRecitationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCRecitation" parameterType="CRecitation" useGeneratedKeys="true" keyProperty="id">
+        insert into c_recitation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="rName != null">r_name,</if>
+            <if test="rHead != null">r_head,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="rDescription != null">r_description,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="rName != null">#{rName},</if>
+            <if test="rHead != null">#{rHead},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="rDescription != null">#{rDescription},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCRecitation" parameterType="CRecitation">
+        update c_recitation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="rName != null">r_name = #{rName},</if>
+            <if test="rHead != null">r_head = #{rHead},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="rDescription != null">r_description = #{rDescription},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCRecitationById" parameterType="Long">
+        delete from c_recitation where id = #{id}
+    </delete>
+
+    <delete id="deleteCRecitationByIds" parameterType="String">
+        delete from c_recitation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

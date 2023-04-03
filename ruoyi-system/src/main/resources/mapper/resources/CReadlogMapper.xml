@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CReadlogMapper">
+    
+    <resultMap type="CReadlog" id="CReadlogResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="rImage"    column="r_image"    />
+        <result property="rName"    column="r_name"    />
+        <result property="compositionId"    column="composition_id"    />
+        <result property="rType"    column="r_type"    />
+    </resultMap>
+
+    <sql id="selectCReadlogVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, r_image, r_name, composition_id, r_type from c_readlog
+    </sql>
+
+    <select id="selectCReadlogList" parameterType="CReadlog" resultMap="CReadlogResult">
+        <include refid="selectCReadlogVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="rImage != null  and rImage != ''"> and r_image = #{rImage}</if>
+            <if test="rName != null  and rName != ''"> and r_name like concat('%', #{rName}, '%')</if>
+            <if test="compositionId != null "> and composition_id = #{compositionId}</if>
+            <if test="rType != null "> and r_type = #{rType}</if>
+        </where>
+    </select>
+    
+    <select id="selectCReadlogById" parameterType="Long" resultMap="CReadlogResult">
+        <include refid="selectCReadlogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCReadlog" parameterType="CReadlog" useGeneratedKeys="true" keyProperty="id">
+        insert into c_readlog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="rImage != null">r_image,</if>
+            <if test="rName != null">r_name,</if>
+            <if test="compositionId != null">composition_id,</if>
+            <if test="rType != null">r_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="rImage != null">#{rImage},</if>
+            <if test="rName != null">#{rName},</if>
+            <if test="compositionId != null">#{compositionId},</if>
+            <if test="rType != null">#{rType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCReadlog" parameterType="CReadlog">
+        update c_readlog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="rImage != null">r_image = #{rImage},</if>
+            <if test="rName != null">r_name = #{rName},</if>
+            <if test="compositionId != null">composition_id = #{compositionId},</if>
+            <if test="rType != null">r_type = #{rType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCReadlogById" parameterType="Long">
+        delete from c_readlog where id = #{id}
+    </delete>
+
+    <delete id="deleteCReadlogByIds" parameterType="String">
+        delete from c_readlog where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

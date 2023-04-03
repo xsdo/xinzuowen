@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tasks.mapper.ReadTaskMapper">
+    
+    <resultMap type="ReadTask" id="ReadTaskResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="rTitle"    column="r_title"    />
+        <result property="rSynopsis"    column="r_synopsis"    />
+        <result property="rBegintime"    column="r_begintime"    />
+        <result property="rEndtime"    column="r_endtime"    />
+        <result property="rStatus"    column="r_status"    />
+        <result property="rTaskfirst"    column="r_taskfirst"    />
+        <result property="rTasksecond"    column="r_tasksecond"    />
+        <result property="rTime"    column="r_time"    />
+    </resultMap>
+
+    <sql id="selectReadTaskVo">
+        select id, isUsed, create_time, update_time, remarks, r_title, r_synopsis, r_begintime, r_endtime, r_status, r_taskfirst, r_tasksecond, r_time from read_task
+    </sql>
+
+    <select id="selectReadTaskList" parameterType="ReadTask" resultMap="ReadTaskResult">
+        <include refid="selectReadTaskVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="rTitle != null  and rTitle != ''"> and r_title = #{rTitle}</if>
+            <if test="rSynopsis != null  and rSynopsis != ''"> and r_synopsis = #{rSynopsis}</if>
+            <if test="rBegintime != null "> and r_begintime = #{rBegintime}</if>
+            <if test="rEndtime != null "> and r_endtime = #{rEndtime}</if>
+            <if test="rStatus != null "> and r_status = #{rStatus}</if>
+            <if test="rTaskfirst != null  and rTaskfirst != ''"> and r_taskfirst = #{rTaskfirst}</if>
+            <if test="rTasksecond != null  and rTasksecond != ''"> and r_tasksecond = #{rTasksecond}</if>
+            <if test="rTime != null  and rTime != ''"> and r_time = #{rTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectReadTaskById" parameterType="Long" resultMap="ReadTaskResult">
+        <include refid="selectReadTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertReadTask" parameterType="ReadTask" useGeneratedKeys="true" keyProperty="id">
+        insert into read_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="rTitle != null">r_title,</if>
+            <if test="rSynopsis != null">r_synopsis,</if>
+            <if test="rBegintime != null">r_begintime,</if>
+            <if test="rEndtime != null">r_endtime,</if>
+            <if test="rStatus != null">r_status,</if>
+            <if test="rTaskfirst != null">r_taskfirst,</if>
+            <if test="rTasksecond != null">r_tasksecond,</if>
+            <if test="rTime != null">r_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="rTitle != null">#{rTitle},</if>
+            <if test="rSynopsis != null">#{rSynopsis},</if>
+            <if test="rBegintime != null">#{rBegintime},</if>
+            <if test="rEndtime != null">#{rEndtime},</if>
+            <if test="rStatus != null">#{rStatus},</if>
+            <if test="rTaskfirst != null">#{rTaskfirst},</if>
+            <if test="rTasksecond != null">#{rTasksecond},</if>
+            <if test="rTime != null">#{rTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateReadTask" parameterType="ReadTask">
+        update read_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="rTitle != null">r_title = #{rTitle},</if>
+            <if test="rSynopsis != null">r_synopsis = #{rSynopsis},</if>
+            <if test="rBegintime != null">r_begintime = #{rBegintime},</if>
+            <if test="rEndtime != null">r_endtime = #{rEndtime},</if>
+            <if test="rStatus != null">r_status = #{rStatus},</if>
+            <if test="rTaskfirst != null">r_taskfirst = #{rTaskfirst},</if>
+            <if test="rTasksecond != null">r_tasksecond = #{rTasksecond},</if>
+            <if test="rTime != null">r_time = #{rTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteReadTaskById" parameterType="Long">
+        delete from read_task where id = #{id}
+    </delete>
+
+    <delete id="deleteReadTaskByIds" parameterType="String">
+        delete from read_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

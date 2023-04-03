@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CSubmitMapper">
+    
+    <resultMap type="CSubmit" id="CSubmitResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="userId"    column="user_id"    />
+        <result property="sName"    column="s_name"    />
+        <result property="sContent"    column="s_content"    />
+    </resultMap>
+
+    <sql id="selectCSubmitVo">
+        select id, isUsed, create_time, update_time, remarks, user_id, s_name, s_content from c_submit
+    </sql>
+
+    <select id="selectCSubmitList" parameterType="CSubmit" resultMap="CSubmitResult">
+        <include refid="selectCSubmitVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="sName != null  and sName != ''"> and s_name like concat('%', #{sName}, '%')</if>
+            <if test="sContent != null  and sContent != ''"> and s_content = #{sContent}</if>
+        </where>
+    </select>
+    
+    <select id="selectCSubmitById" parameterType="Long" resultMap="CSubmitResult">
+        <include refid="selectCSubmitVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCSubmit" parameterType="CSubmit" useGeneratedKeys="true" keyProperty="id">
+        insert into c_submit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="sName != null">s_name,</if>
+            <if test="sContent != null">s_content,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="sName != null">#{sName},</if>
+            <if test="sContent != null">#{sContent},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCSubmit" parameterType="CSubmit">
+        update c_submit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="sName != null">s_name = #{sName},</if>
+            <if test="sContent != null">s_content = #{sContent},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCSubmitById" parameterType="Long">
+        delete from c_submit where id = #{id}
+    </delete>
+
+    <delete id="deleteCSubmitByIds" parameterType="String">
+        delete from c_submit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

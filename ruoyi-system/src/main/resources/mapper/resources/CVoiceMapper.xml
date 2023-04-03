@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CVoiceMapper">
+    
+    <resultMap type="CVoice" id="CVoiceResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="vName"    column="v_name"    />
+        <result property="vRecitationid"    column="v_recitationId"    />
+        <result property="vVoice"    column="v_voice"    />
+    </resultMap>
+
+    <sql id="selectCVoiceVo">
+        select id, isUsed, create_time, update_time, remarks, v_name, v_recitationId, v_voice from c_voice
+    </sql>
+
+    <select id="selectCVoiceList" parameterType="CVoice" resultMap="CVoiceResult">
+        <include refid="selectCVoiceVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="vName != null  and vName != ''"> and v_name like concat('%', #{vName}, '%')</if>
+            <if test="vRecitationid != null "> and v_recitationId = #{vRecitationid}</if>
+            <if test="vVoice != null  and vVoice != ''"> and v_voice = #{vVoice}</if>
+        </where>
+    </select>
+    
+    <select id="selectCVoiceById" parameterType="Long" resultMap="CVoiceResult">
+        <include refid="selectCVoiceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCVoice" parameterType="CVoice" useGeneratedKeys="true" keyProperty="id">
+        insert into c_voice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="vName != null">v_name,</if>
+            <if test="vRecitationid != null">v_recitationId,</if>
+            <if test="vVoice != null">v_voice,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="vName != null">#{vName},</if>
+            <if test="vRecitationid != null">#{vRecitationid},</if>
+            <if test="vVoice != null">#{vVoice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCVoice" parameterType="CVoice">
+        update c_voice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="vName != null">v_name = #{vName},</if>
+            <if test="vRecitationid != null">v_recitationId = #{vRecitationid},</if>
+            <if test="vVoice != null">v_voice = #{vVoice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCVoiceById" parameterType="Long">
+        delete from c_voice where id = #{id}
+    </delete>
+
+    <delete id="deleteCVoiceByIds" parameterType="String">
+        delete from c_voice where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
