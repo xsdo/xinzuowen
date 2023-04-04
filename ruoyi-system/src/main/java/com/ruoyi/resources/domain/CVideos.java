@@ -4,7 +4,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 /**
  * 视频对象 c_videos
  * 
@@ -16,10 +23,14 @@ public class CVideos extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -40,6 +51,8 @@ public class CVideos extends BaseEntity
 
     /** 视频类型（默认0：通用 ；专题：1 ；专辑：2； 同步：3； 宣传片：4） */
     @Excel(name = "视频类型", readConverterExp = "默=认0：通用,；=专题：1,；=专辑：2；,同=步：3；,宣=传片：4")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long vType;
 
     /** 作者头衔 */

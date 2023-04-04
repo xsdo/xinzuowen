@@ -4,7 +4,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 /**
  * 部编好句对象 d_goodsentence
  * 
@@ -16,10 +23,14 @@ public class DGoodsentence extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -36,6 +47,8 @@ public class DGoodsentence extends BaseEntity
 
     /** 同步作文id */
     @Excel(name = "同步作文id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long departmentId;
 
     public void setId(Long id) 

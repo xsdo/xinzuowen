@@ -4,7 +4,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 /**
  * 全国作文对象 c_nation
  * 
@@ -16,10 +23,14 @@ public class CNation extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -28,6 +39,8 @@ public class CNation extends BaseEntity
 
     /** 作文id */
     @Excel(name = "作文id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long compositionId;
 
     /** 文章图片 */
@@ -36,14 +49,20 @@ public class CNation extends BaseEntity
 
     /** 文章音频id */
     @Excel(name = "文章音频id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long nVoice;
 
     /** 点赞数 */
     @Excel(name = "点赞数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long nLikes;
 
     /** 评论数 */
     @Excel(name = "评论数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long nDiscuss;
 
     public void setId(Long id) 

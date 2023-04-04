@@ -6,6 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 推荐用户对象 suggest_user
@@ -18,10 +22,14 @@ public class SuggestUser extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -30,6 +38,8 @@ public class SuggestUser extends BaseEntity
 
     /** 用户id */
     @Excel(name = "用户id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userId;
 
     /** 用户名 */
@@ -42,18 +52,26 @@ public class SuggestUser extends BaseEntity
 
     /** 用户标签 */
     @Excel(name = "用户标签")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userTable;
 
     /** 用户类型 */
     @Excel(name = "用户类型")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userType;
 
     /** 用户粉丝数 */
     @Excel(name = "用户粉丝数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userFans;
 
     /** 是否置顶 */
     @Excel(name = "是否置顶")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long uTop;
 
     /** 置顶结束时间 */

@@ -4,6 +4,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 认证用户记录对象 auth_tasklog
@@ -16,10 +20,14 @@ public class AuthTasklog extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -28,14 +36,20 @@ public class AuthTasklog extends BaseEntity
 
     /** 绑定任务id */
     @Excel(name = "绑定任务id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long taskId;
 
     /** 绑定用户id */
     @Excel(name = "绑定用户id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userId;
 
     /** 任务状态（默认：0未领取；进行中：1；已完成：2） */
     @Excel(name = "任务状态", readConverterExp = "默=认：0未领取；进行中：1；已完成：2")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long status;
 
     public void setId(Long id) 

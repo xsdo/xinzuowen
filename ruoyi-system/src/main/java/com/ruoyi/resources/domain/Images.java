@@ -4,6 +4,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 随机图对象 images
@@ -16,6 +20,8 @@ public class Images extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** id */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 大图地址 */
@@ -28,6 +34,8 @@ public class Images extends BaseEntity
 
     /** 类型 */
     @Excel(name = "类型")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long type;
 
     public void setId(Long id) 

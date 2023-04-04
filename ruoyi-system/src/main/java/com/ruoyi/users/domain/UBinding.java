@@ -6,6 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 绑定班级对象 u_binding
@@ -18,10 +22,14 @@ public class UBinding extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -30,10 +38,14 @@ public class UBinding extends BaseEntity
 
     /** 教师班级id */
     @Excel(name = "教师班级id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long teacherId;
 
     /** 用户id */
     @Excel(name = "用户id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userId;
 
     /** 扫码时间 */
@@ -48,6 +60,8 @@ public class UBinding extends BaseEntity
 
     /** 绑定状态（默认0：待绑定；已绑定：1；绑定失败：2） */
     @Excel(name = "绑定状态", readConverterExp = "默=认0：待绑定；已绑定：1；绑定失败：2")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long bStatus;
 
     public void setId(Long id) 

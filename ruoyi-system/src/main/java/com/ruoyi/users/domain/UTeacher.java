@@ -4,6 +4,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 教师班级对象 u_teacher
@@ -16,10 +20,14 @@ public class UTeacher extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -32,6 +40,8 @@ public class UTeacher extends BaseEntity
 
     /** 绑定学校id */
     @Excel(name = "绑定学校id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long tSchoolid;
 
     /** 年级 */
@@ -48,10 +58,14 @@ public class UTeacher extends BaseEntity
 
     /** 学生人数 */
     @Excel(name = "学生人数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long tStudent;
 
     /** 班级鲜花数 */
     @Excel(name = "班级鲜花数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long tFlowers;
 
     /** 班级头像 */
@@ -76,26 +90,38 @@ public class UTeacher extends BaseEntity
 
     /** 写作数 */
     @Excel(name = "写作数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long writes;
 
     /** 阅读数 */
     @Excel(name = "阅读数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long readings;
 
     /** 朗读数 */
     @Excel(name = "朗读数")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long readalouds;
 
     /** 班级开关 0不可加入 */
     @Excel(name = "班级开关 0不可加入")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long tOpen;
 
     /** 排名 */
     @Excel(name = "排名")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long rankings;
 
     /** 老师id */
     @Excel(name = "老师id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long teacherId;
 
     public void setId(Long id) 

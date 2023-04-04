@@ -6,6 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 激活码对象 u_activation
@@ -18,10 +22,14 @@ public class UActivation extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -30,6 +38,8 @@ public class UActivation extends BaseEntity
 
     /** 会员类型（默认：0注册会员；终身会员：1；年卡：2） */
     @Excel(name = "会员类型", readConverterExp = "默=认：0注册会员；终身会员：1；年卡：2")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long vipType;
 
     /** 激活码创建时间 */
@@ -48,6 +58,8 @@ public class UActivation extends BaseEntity
 
     /** 激活码状态（默认：0未激活；激活：1） */
     @Excel(name = "激活码状态", readConverterExp = "默=认：0未激活；激活：1")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long status;
 
     /** 激活时间 */
@@ -57,6 +69,8 @@ public class UActivation extends BaseEntity
 
     /** 激活用户id */
     @Excel(name = "激活用户id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userId;
 
     /** 建码人 */

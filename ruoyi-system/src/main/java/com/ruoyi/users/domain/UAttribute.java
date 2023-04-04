@@ -6,6 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 用户属性对象 u_attribute
@@ -18,10 +22,14 @@ public class UAttribute extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -30,6 +38,8 @@ public class UAttribute extends BaseEntity
 
     /** 性别（默认：0；男：1；女：2） */
     @Excel(name = "性别", readConverterExp = "默=认：0；男：1；女：2")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long sex;
 
     /** 生日 */
@@ -55,10 +65,14 @@ public class UAttribute extends BaseEntity
 
     /** 用户类型(默认：0；读者：1；作者：2；编辑：3；播音：4；教师：5；代理商：6) */
     @Excel(name = "用户类型(默认：0；读者：1；作者：2；编辑：3；播音：4；教师：5；代理商：6)")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long uType;
 
     /** 展示标签id，绑定标签表 */
     @Excel(name = "展示标签id，绑定标签表")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long uTableuse;
 
     /** 已获取标签id集合 */
@@ -83,6 +97,8 @@ public class UAttribute extends BaseEntity
 
     /** 是否认证用户(no0;yes1) */
     @Excel(name = "是否认证用户(no0;yes1)")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isAuth;
 
     /** 个性签名 */
@@ -95,14 +111,20 @@ public class UAttribute extends BaseEntity
 
     /** 绑定老师id */
     @Excel(name = "绑定老师id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long teacherid;
 
     /** 是否优评员（默认0：非；优评：1） */
     @Excel(name = "是否优评员", readConverterExp = "默=认0：非；优评：1")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isgoodcommons;
 
     /** 积分 */
     @Excel(name = "积分")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long integral;
 
     public void setId(Long id) 

@@ -4,6 +4,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 阅读任务记录对象 read_tasklog
@@ -16,10 +20,14 @@ public class ReadTasklog extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -28,18 +36,26 @@ public class ReadTasklog extends BaseEntity
 
     /** 阅读任务id */
     @Excel(name = "阅读任务id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long taskId;
 
     /** 用户id */
     @Excel(name = "用户id")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long userId;
 
     /** 任务1状态（默认0未开启；进行中：1；完成：2；未完成：3） */
     @Excel(name = "任务1状态", readConverterExp = "默=认0未开启；进行中：1；完成：2；未完成：3")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long statusfirst;
 
     /** 任务2状态（默认0未开启；进行中：1；完成：2；未完成：3） */
     @Excel(name = "任务2状态", readConverterExp = "默=认0未开启；进行中：1；完成：2；未完成：3")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long statussecond;
 
     public void setId(Long id) 

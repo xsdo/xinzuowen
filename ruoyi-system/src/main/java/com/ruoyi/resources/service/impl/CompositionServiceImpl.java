@@ -33,7 +33,7 @@ public class CompositionServiceImpl implements ICompositionService
     }
 
     /**
-     * 查询作文列表
+     * 查询作文列表 开发
      * 
      * @param composition 作文
      * @return 作文

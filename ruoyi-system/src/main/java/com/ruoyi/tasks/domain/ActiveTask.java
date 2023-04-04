@@ -6,6 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruoyi.common.utils.LongJsonDeserializer;
+import com.ruoyi.common.utils.LongJsonSerializer;
 
 /**
  * 活动任务对象 active_task
@@ -18,10 +22,14 @@ public class ActiveTask extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /** 是否使用（默认0：启用； 1：废弃） */
     @Excel(name = "是否使用", readConverterExp = "默=认0：启用；,1=：废弃")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long isUsed;
 
     /** 备注 */
@@ -38,10 +46,14 @@ public class ActiveTask extends BaseEntity
 
     /** 活动状态（默认：0未开始；已开始：1；已结束：2） */
     @Excel(name = "活动状态", readConverterExp = "默=认：0未开始；已开始：1；已结束：2")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long acStatus;
 
     /** 活动类型（默认：0活动；征文：1；推荐阅读：2） */
     @Excel(name = "活动类型", readConverterExp = "默=认：0活动；征文：1；推荐阅读：2")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long acType;
 
     /** 活动奖励 */
@@ -64,6 +76,8 @@ public class ActiveTask extends BaseEntity
 
     /** 是否付费 */
     @Excel(name = "是否付费")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long acIspay;
 
     /** 活动文案 */
