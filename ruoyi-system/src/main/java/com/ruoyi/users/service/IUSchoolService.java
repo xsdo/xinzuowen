@@ -19,6 +19,8 @@ public interface IUSchoolService
      */
     public USchool selectUSchoolById(Long id);
 
+    USchool schoolQRCode(Long schoolId);
+    USchool schoolQRCodePress(Long schoolId);
     /**
      * 查询用户学校列表
      * 

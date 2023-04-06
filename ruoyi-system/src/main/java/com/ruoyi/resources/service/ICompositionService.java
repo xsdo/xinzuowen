@@ -19,6 +19,8 @@ public interface ICompositionService
      */
     public Composition selectCompositionById(Long id);
 
+    Composition compositionQRCode(Long compositionId);
+    Composition compositionQRCodePress(Long compositionId);
     /**
      * 查询作文列表
      * 

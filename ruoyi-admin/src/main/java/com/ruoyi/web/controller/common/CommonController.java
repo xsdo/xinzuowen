@@ -81,6 +81,7 @@ public class CommonController
             String filePath = RuoYiConfig.getNewsPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
+            fileName=fileName.replaceFirst("profile","Resource");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
@@ -106,6 +107,7 @@ public class CommonController
             String filePath = RuoYiConfig.getAvatarPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
+            fileName=fileName.replaceFirst("profile","Resource");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
@@ -131,6 +133,7 @@ public class CommonController
             String filePath = RuoYiConfig.getVoicePath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
+            fileName=fileName.replaceFirst("profile","Resource");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
@@ -156,6 +159,7 @@ public class CommonController
             String filePath = RuoYiConfig.getTongbuVoicePath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
+            fileName=fileName.replaceFirst("profile","Resource");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);

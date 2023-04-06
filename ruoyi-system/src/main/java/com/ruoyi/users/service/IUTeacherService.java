@@ -19,6 +19,9 @@ public interface IUTeacherService
      */
     public UTeacher selectUTeacherById(Long id);
 
+    UTeacher teacherQRCode(Long teacherId);
+
+    UTeacher teacherQRCodePress(Long teacherId);
     /**
      * 查询教师班级列表
      * 

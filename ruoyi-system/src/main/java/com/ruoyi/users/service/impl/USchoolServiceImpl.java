@@ -1,7 +1,14 @@
 package com.ruoyi.users.service.impl;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.List;
+
+import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.QRCodeUtil;
+import com.ruoyi.common.utils.QRCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.users.mapper.USchoolMapper;
@@ -30,6 +37,69 @@ public class USchoolServiceImpl implements IUSchoolService
     public USchool selectUSchoolById(Long id)
     {
         return uSchoolMapper.selectUSchoolById(id);
+    }
+
+    @Override
+    public USchool schoolQRCode(Long schoolId) {
+        USchool uSchool=this.selectUSchoolById(schoolId);
+        if (uSchool != null) {
+            try{
+                // 存放在二维码中的内容
+                // 二维码中的内容可以是文字，可以是链接等
+                String text = "https://xzw.aace.com.cn/school/?schoolId="+schoolId;
+                // 生成的二维码的路径及名称
+                String name=System.currentTimeMillis()+"";
+                String destPath = RuoYiConfig.getNewsPath()+"/"+ name + ".jpg";
+
+                //生成二维码
+                QRCodeUtil.encode(text, null, destPath, true);
+                // 解析二维码 部分二维码错误 略去解析步骤
+//                String str = QRCodeUtil.decode(destPath);
+//                System.out.println(str);
+
+                String codePath="/Resource/News/"+name + ".jpg";
+                uSchool.setQrCode(codePath);
+                this.updateUSchool(uSchool);
+            }catch (Exception e) {
+
+            }
+        }
+        return this.selectUSchoolById(schoolId);
+    }
+    @Override
+    public USchool schoolQRCodePress(Long schoolId) {
+        USchool uSchool=this.selectUSchoolById(schoolId);
+        if (uSchool != null) {
+            try{
+                // 存放在二维码中的内容
+                BufferedImage image = null;
+                File uploadFile = null;
+                // 存放在二维码中的内容
+                // 二维码中的内容可以是文字，可以是链接等
+                String text = "https://xzw.aace.com.cn/school/?schoolId="+schoolId;
+                image = QRCodeUtils.createQRCode(text);
+                image=QRCodeUtils.pressText(image,null, Color.BLACK,uSchool.getsName());
+                String imgPath =RuoYiConfig.getNewsPath()+"/"+"logo.png";
+                image=QRCodeUtils.insertLogo(image,imgPath,true);
+                // 生成的二维码的路径及名称
+                String name=System.currentTimeMillis()+"";
+                String destPath = RuoYiConfig.getNewsPath()+"/"+ name + ".jpg";
+
+                //生成二维码
+//                QRCodeUtil.encode(text, null, destPath, true);
+                QRCodeUtils.writeToLocalByPath(image, "jpg", destPath);
+                // 解析二维码 部分二维码错误 略去解析步骤
+//                String str = QRCodeUtil.decode(destPath);
+//                System.out.println(str);
+
+                String codePath="/Resource/News/"+name + ".jpg";
+                uSchool.setQrCode(codePath);
+                this.updateUSchool(uSchool);
+            }catch (Exception e) {
+
+            }
+        }
+        return this.selectUSchoolById(schoolId);
     }
 
     /**

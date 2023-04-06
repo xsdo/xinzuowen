@@ -43,6 +43,14 @@ public class USchoolController extends BaseController
     {
         startPage();
         List<USchool> list = uSchoolService.selectUSchoolList(uSchool);
+        if (list!=null && list.size() > 0) {
+            for (USchool s: list) {
+                if (s.getQrCode()==null){
+                    uSchoolService.schoolQRCodePress(s.getId());
+                }
+            }
+        }
+        list = uSchoolService.selectUSchoolList(uSchool);
         return getDataTable(list);
     }
 
@@ -69,6 +77,10 @@ public class USchoolController extends BaseController
         return success(uSchoolService.selectUSchoolById(id));
     }
 
+    @GetMapping("schoolQRCode")
+    public USchool schoolQRCode(Long schoolId){
+        return uSchoolService.schoolQRCodePress(schoolId);
+    }
     /**
      * 新增用户学校
      */

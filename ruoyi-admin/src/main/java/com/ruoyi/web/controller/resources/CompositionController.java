@@ -46,6 +46,10 @@ public class CompositionController extends BaseController
         return getDataTable(list);
     }
 
+    @GetMapping("compositionQRCode")
+    public Composition compositionQRCode(Long compositionId){
+        return compositionService.compositionQRCodePress(compositionId);
+    }
     /**
      * 导出作文列表
      */
@@ -68,6 +72,7 @@ public class CompositionController extends BaseController
     {
         return success(compositionService.selectCompositionById(id));
     }
+
 
     /**
      * 新增作文

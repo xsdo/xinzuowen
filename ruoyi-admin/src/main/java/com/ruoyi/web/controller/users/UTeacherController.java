@@ -69,6 +69,10 @@ public class UTeacherController extends BaseController
         return success(uTeacherService.selectUTeacherById(id));
     }
 
+    @GetMapping("teacherQRCode")
+    public UTeacher teacherQRCode(Long teacherId){
+        return uTeacherService.teacherQRCodePress(teacherId);
+    }
     /**
      * 新增教师班级
      */
