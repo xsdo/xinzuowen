@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="isUsed != null "> and isUsed = #{isUsed}</if>
             <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
-            <if test="cTitle != null  and cTitle != ''"> and c_title = #{cTitle}</if>
+            <if test="cTitle != null  and cTitle != ''"> and c_title like concat('%', #{cTitle}, '%')</if>
             <if test="cAuthorid != null "> and c_authorId = #{cAuthorid}</if>
             <if test="cSynopsis != null  and cSynopsis != ''"> and c_synopsis = #{cSynopsis}</if>
             <if test="cArticle != null  and cArticle != ''"> and c_article = #{cArticle}</if>

@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectUSchoolVo"/>
         <where>  
             <if test="isUsed != null "> and isUsed = #{isUsed}</if>
-            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks like concat('%', #{remarks}, '%')</if>
             <if test="sName != null  and sName != ''"> and s_name like concat('%', #{sName}, '%')</if>
             <if test="sProvince != null  and sProvince != ''"> and s_province = #{sProvince}</if>
             <if test="sCity != null  and sCity != ''"> and s_city = #{sCity}</if>
