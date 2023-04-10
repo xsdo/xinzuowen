@@ -33,6 +33,9 @@ public class MimeTypeUtils
             "doc", "docx", "xls", "xlsx", "ppt", "pptx", "html", "htm", "txt",
             // 压缩文件
             "rar", "zip", "gz", "bz2",
+            //音频
+            "swf", "flv", "mp3", "wav", "wma", "wmv", "mid", "avi", "mpg",
+            "asf", "rm", "rmvb",
             // 视频格式
             "mp4", "avi", "rmvb",
             // pdf
