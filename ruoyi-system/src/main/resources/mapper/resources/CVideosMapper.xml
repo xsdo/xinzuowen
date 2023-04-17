@@ -44,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="vUnitarea != null  and vUnitarea != ''"> and v_unitarea = #{vUnitarea}</if>
             <if test="vImage != null  and vImage != ''"> and v_image = #{vImage}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectCVideosById" parameterType="Long" resultMap="CVideosResult">

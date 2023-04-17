@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null "> and status = #{status}</if>
             <if test="likes != null "> and likes = #{likes}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectCDiscussById" parameterType="Long" resultMap="CDiscussResult">

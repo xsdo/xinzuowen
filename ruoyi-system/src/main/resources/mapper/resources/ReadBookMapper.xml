@@ -2,97 +2,91 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.resources.mapper.MagazinesMapper">
+<mapper namespace="com.ruoyi.resources.mapper.ReadBookMapper">
     
-    <resultMap type="Magazines" id="MagazinesResult">
+    <resultMap type="ReadBook" id="ReadBookResult">
         <result property="id"    column="id"    />
         <result property="isUsed"    column="isUsed"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remarks"    column="remarks"    />
-        <result property="titles"    column="titles"    />
-        <result property="readTime"    column="readTime"    />
         <result property="name"    column="name"    />
-        <result property="type"    column="type"    />
-        <result property="tryVip"    column="tryVip"    />
         <result property="image"    column="image"    />
+        <result property="profile"    column="profile"    />
+        <result property="press"    column="press"    />
+        <result property="diagram"    column="diagram"    />
     </resultMap>
 
-    <sql id="selectMagazinesVo">
-        select id, isUsed, create_time, update_time, remarks, titles, readTime, name, type, tryVip, image from magazines
+    <sql id="selectReadBookVo">
+        select id, isUsed, create_time, update_time, remarks, name, image, profile, press, diagram from read_book
     </sql>
 
-    <select id="selectMagazinesList" parameterType="Magazines" resultMap="MagazinesResult">
-        <include refid="selectMagazinesVo"/>
+    <select id="selectReadBookList" parameterType="ReadBook" resultMap="ReadBookResult">
+        <include refid="selectReadBookVo"/>
         <where>  
             <if test="isUsed != null "> and isUsed = #{isUsed}</if>
             <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
-            <if test="titles != null  and titles != ''"> and titles = #{titles}</if>
-            <if test="readTime != null "> and readTime = #{readTime}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="type != null "> and type = #{type}</if>
-            <if test="tryVip != null "> and tryVip = #{tryVip}</if>
             <if test="image != null  and image != ''"> and image = #{image}</if>
+            <if test="profile != null  and profile != ''"> and profile = #{profile}</if>
+            <if test="press != null  and press != ''"> and press = #{press}</if>
+            <if test="diagram != null  and diagram != ''"> and diagram = #{diagram}</if>
         </where>
-        order by create_time desc
     </select>
     
-    <select id="selectMagazinesById" parameterType="Long" resultMap="MagazinesResult">
-        <include refid="selectMagazinesVo"/>
+    <select id="selectReadBookById" parameterType="Long" resultMap="ReadBookResult">
+        <include refid="selectReadBookVo"/>
         where id = #{id}
     </select>
         
-    <insert id="insertMagazines" parameterType="Magazines" useGeneratedKeys="true" keyProperty="id">
-        insert into magazines
+    <insert id="insertReadBook" parameterType="ReadBook" useGeneratedKeys="true" keyProperty="id">
+        insert into read_book
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="isUsed != null">isUsed,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remarks != null">remarks,</if>
-            <if test="titles != null">titles,</if>
-            <if test="readTime != null">readTime,</if>
             <if test="name != null">name,</if>
-            <if test="type != null">type,</if>
-            <if test="tryVip != null">tryVip,</if>
             <if test="image != null">image,</if>
+            <if test="profile != null">profile,</if>
+            <if test="press != null">press,</if>
+            <if test="diagram != null">diagram,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="isUsed != null">#{isUsed},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remarks != null">#{remarks},</if>
-            <if test="titles != null">#{titles},</if>
-            <if test="readTime != null">#{readTime},</if>
             <if test="name != null">#{name},</if>
-            <if test="type != null">#{type},</if>
-            <if test="tryVip != null">#{tryVip},</if>
             <if test="image != null">#{image},</if>
+            <if test="profile != null">#{profile},</if>
+            <if test="press != null">#{press},</if>
+            <if test="diagram != null">#{diagram},</if>
          </trim>
     </insert>
 
-    <update id="updateMagazines" parameterType="Magazines">
-        update magazines
+    <update id="updateReadBook" parameterType="ReadBook">
+        update read_book
         <trim prefix="SET" suffixOverrides=",">
             <if test="isUsed != null">isUsed = #{isUsed},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remarks != null">remarks = #{remarks},</if>
-            <if test="titles != null">titles = #{titles},</if>
-            <if test="readTime != null">readTime = #{readTime},</if>
             <if test="name != null">name = #{name},</if>
-            <if test="type != null">type = #{type},</if>
-            <if test="tryVip != null">tryVip = #{tryVip},</if>
             <if test="image != null">image = #{image},</if>
+            <if test="profile != null">profile = #{profile},</if>
+            <if test="press != null">press = #{press},</if>
+            <if test="diagram != null">diagram = #{diagram},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <delete id="deleteMagazinesById" parameterType="Long">
-        delete from magazines where id = #{id}
+    <delete id="deleteReadBookById" parameterType="Long">
+        delete from read_book where id = #{id}
     </delete>
 
-    <delete id="deleteMagazinesByIds" parameterType="String">
-        delete from magazines where id in 
+    <delete id="deleteReadBookByIds" parameterType="String">
+        delete from read_book where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tryVip != null "> and tryVip = #{tryVip}</if>
             <if test="compositionId != null "> and composition_id = #{compositionId}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectMContentById" parameterType="Long" resultMap="MContentResult">

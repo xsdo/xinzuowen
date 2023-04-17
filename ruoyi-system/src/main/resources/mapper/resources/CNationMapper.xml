@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="nLikes != null "> and n_likes = #{nLikes}</if>
             <if test="nDiscuss != null "> and n_discuss = #{nDiscuss}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectCNationById" parameterType="Long" resultMap="CNationResult">

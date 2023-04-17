@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.ReadContestMapper">
+    
+    <resultMap type="ReadContest" id="ReadContestResult">
+        <result property="id"    column="id"    />
+        <result property="isUsed"    column="isUsed"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="books"    column="books"    />
+        <result property="enrollId"    column="enroll_id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectReadContestVo">
+        select id, isUsed, create_time, update_time, remarks, books, enroll_id, title, content, type from read_contest
+    </sql>
+
+    <select id="selectReadContestList" parameterType="ReadContest" resultMap="ReadContestResult">
+        <include refid="selectReadContestVo"/>
+        <where>  
+            <if test="isUsed != null "> and isUsed = #{isUsed}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="books != null  and books != ''"> and books = #{books}</if>
+            <if test="enrollId != null "> and enroll_id = #{enrollId}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectReadContestById" parameterType="Long" resultMap="ReadContestResult">
+        <include refid="selectReadContestVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertReadContest" parameterType="ReadContest" useGeneratedKeys="true" keyProperty="id">
+        insert into read_contest
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">isUsed,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="books != null">books,</if>
+            <if test="enrollId != null">enroll_id,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="type != null">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isUsed != null">#{isUsed},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="books != null">#{books},</if>
+            <if test="enrollId != null">#{enrollId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="type != null">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateReadContest" parameterType="ReadContest">
+        update read_contest
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isUsed != null">isUsed = #{isUsed},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="books != null">books = #{books},</if>
+            <if test="enrollId != null">enroll_id = #{enrollId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteReadContestById" parameterType="Long">
+        delete from read_contest where id = #{id}
+    </delete>
+
+    <delete id="deleteReadContestByIds" parameterType="String">
+        delete from read_contest where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

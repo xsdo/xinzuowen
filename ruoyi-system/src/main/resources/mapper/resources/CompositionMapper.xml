@@ -40,9 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cTitle != null  and cTitle != ''"> and c_title like concat('%', #{cTitle}, '%')</if>
             <if test="cAuthorid != null "> and c_authorId = #{cAuthorid}</if>
             <if test="cSynopsis != null  and cSynopsis != ''"> and c_synopsis = #{cSynopsis}</if>
-            <if test="cArticle != null  and cArticle != ''"> and c_article = #{cArticle}</if>
+            <if test="cArticle != null  and cArticle != ''"> and c_article like concat('%', #{cArticle}, '%')</if>
             <if test="cImageb != null  and cImageb != ''"> and c_imageB = #{cImageb}</if>
-            <if test="cImages != null  and cImages != ''"> and c_imageS = #{cImages}</if>
+            <if test="cImages != null  and cImages != ''"> and c_imageS like concat('%', #{cImages}, '%')</if>
             <if test="cVoice != null "> and c_voice = #{cVoice}</if>
             <if test="cVideos != null "> and c_videos = #{cVideos}</if>
             <if test="cVip != null "> and c_vip = #{cVip}</if>
@@ -54,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cDiscuss != null "> and c_discuss = #{cDiscuss}</if>
             <if test="cReadtimes != null "> and c_readtimes = #{cReadtimes}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectCompositionById" parameterType="Long" resultMap="CompositionResult">

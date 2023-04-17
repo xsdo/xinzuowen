@@ -77,7 +77,7 @@ public class CAuthorsController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody CAuthors cAuthors)
     {
-        return toAjax(cAuthorsService.insertCAuthors(cAuthors));
+        return success(cAuthorsService.insertCAuthors(cAuthors));
     }
 
     /**

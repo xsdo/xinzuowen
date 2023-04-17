@@ -3,10 +3,14 @@ package com.ruoyi.users.service.impl;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.ruoyi.common.config.OssProperties;
 import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.OssUtil;
 import com.ruoyi.common.utils.QRCodeUtil;
 import com.ruoyi.common.utils.QRCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,8 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.users.mapper.USchoolMapper;
 import com.ruoyi.users.domain.USchool;
 import com.ruoyi.users.service.IUSchoolService;
+
+import javax.imageio.ImageIO;
 
 /**
  * 用户学校Service业务层处理
@@ -68,6 +74,13 @@ public class USchoolServiceImpl implements IUSchoolService
     }
     @Override
     public USchool schoolQRCodePress(Long schoolId) {
+        /**
+         * 获取oss的属性
+         */
+        String endpoint = OssProperties.getEndpoint();
+        String accessKeyId = OssProperties.getKeyId();
+        String accessKeySecret = OssProperties.getKeySecret();
+        String bucketName = OssProperties.getBucketName();
         USchool uSchool=this.selectUSchoolById(schoolId);
         if (uSchool != null) {
             try{
@@ -87,6 +100,15 @@ public class USchoolServiceImpl implements IUSchoolService
 
                 //生成二维码
 //                QRCodeUtil.encode(text, null, destPath, true);
+                //上传oss
+                File file = new File(name + ".jpg");
+                ImageIO.write(image, "jpg",file);
+                Map<String, String> map = new HashMap<>();
+                map= OssUtil.uploadOssFile(endpoint, accessKeyId ,accessKeySecret,bucketName,file,"Resource/News/",name + ".jpg");
+                String fileUrlOss=map.get("fileUrl");
+                System.out.println(fileUrlOss);
+                file.delete();
+
                 QRCodeUtils.writeToLocalByPath(image, "jpg", destPath);
                 // 解析二维码 部分二维码错误 略去解析步骤
 //                String str = QRCodeUtil.decode(destPath);

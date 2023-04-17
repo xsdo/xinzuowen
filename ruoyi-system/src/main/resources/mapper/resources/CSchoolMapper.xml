@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sLikes != null "> and s_likes = #{sLikes}</if>
             <if test="sDiscuss != null "> and s_discuss = #{sDiscuss}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectCSchoolById" parameterType="Long" resultMap="CSchoolResult">

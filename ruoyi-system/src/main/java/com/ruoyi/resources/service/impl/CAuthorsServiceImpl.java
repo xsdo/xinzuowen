@@ -54,7 +54,9 @@ public class CAuthorsServiceImpl implements ICAuthorsService
     public int insertCAuthors(CAuthors cAuthors)
     {
         cAuthors.setCreateTime(DateUtils.getNowDate());
-        return cAuthorsMapper.insertCAuthors(cAuthors);
+        cAuthorsMapper.insertCAuthors(cAuthors);
+        int id=cAuthors.getId().intValue();
+        return id;
     }
 
     /**

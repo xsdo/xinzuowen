@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="dReadtimes != null "> and d_readtimes = #{dReadtimes}</if>
             <if test="dImage != null  and dImage != ''"> and d_image = #{dImage}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectDepartmentById" parameterType="Long" resultMap="DepartmentResult">

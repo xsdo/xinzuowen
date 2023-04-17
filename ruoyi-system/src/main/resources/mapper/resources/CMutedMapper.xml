@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
             <if test="mutenumber != null "> and mutenumber = #{mutenumber}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectCMutedById" parameterType="Long" resultMap="CMutedResult">

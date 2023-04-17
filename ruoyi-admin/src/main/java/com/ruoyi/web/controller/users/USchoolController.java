@@ -50,7 +50,6 @@ public class USchoolController extends BaseController
                 }
             }
         }
-        list = uSchoolService.selectUSchoolList(uSchool);
         return getDataTable(list);
     }
 

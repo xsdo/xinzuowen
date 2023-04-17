@@ -43,9 +43,19 @@ public class CompositionController extends BaseController
     {
         startPage();
         List<Composition> list = compositionService.selectCompositionList(composition);
+        if (list!=null && list.size() > 0) {
+            for (Composition s: list) {
+                if (s.getcSynopsis()==null){
+                    compositionService.compositionQRCodePress(s.getId());
+                }
+            }
+        }
         return getDataTable(list);
     }
 
+    /**
+     * 获取作文二维码
+     */
     @GetMapping("compositionQRCode")
     public Composition compositionQRCode(Long compositionId){
         return compositionService.compositionQRCodePress(compositionId);
@@ -82,7 +92,7 @@ public class CompositionController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Composition composition)
     {
-        return toAjax(compositionService.insertComposition(composition));
+        return success(compositionService.insertComposition(composition));
     }
 
     /**

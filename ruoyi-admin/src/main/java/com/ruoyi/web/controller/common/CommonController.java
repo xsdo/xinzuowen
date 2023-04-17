@@ -1,9 +1,16 @@
 package com.ruoyi.web.controller.common;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.config.OssProperties;
+import com.ruoyi.common.utils.OssUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,16 +82,34 @@ public class CommonController
     @PostMapping("/uploadImage")
     public AjaxResult uploadImage(MultipartFile file) throws Exception
     {
+        /**
+         * 获取oss的属性
+         */
+        String endpoint = OssProperties.getEndpoint();
+        String accessKeyId = OssProperties.getKeyId();
+        String accessKeySecret = OssProperties.getKeySecret();
+        String bucketName = OssProperties.getBucketName();
+
         try
         {
+            byte [] byteArr=file.getBytes();
+            InputStream inputStream = new ByteArrayInputStream(byteArr);
+
             // 上传文件路径
             String filePath = RuoYiConfig.getNewsPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             fileName=fileName.replaceFirst("profile","Resource");
+            //上传oss
+            String filename = fileName.substring(fileName.lastIndexOf("/") + 1);
+            String path = fileName.substring(fileName.indexOf("/", 1) + 1, fileName.lastIndexOf("/") + 1);
+            Map<String, String> map = new HashMap<>();
+            map= OssUtil.uploadOss(endpoint, accessKeyId ,accessKeySecret,bucketName,inputStream,"Resource/"+path,filename);
+            String fileUrlOss=map.get("fileUrl");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
+            ajax.put("urlOss", fileUrlOss);
             ajax.put("fileName", fileName);
             ajax.put("newFileName", FileUtils.getName(fileName));
             ajax.put("originalFilename", file.getOriginalFilename());
@@ -101,16 +126,33 @@ public class CommonController
     @PostMapping("/uploadAvatar")
     public AjaxResult uploadAvatar(MultipartFile file) throws Exception
     {
+        /**
+         * 获取oss的属性
+         */
+        String endpoint = OssProperties.getEndpoint();
+        String accessKeyId = OssProperties.getKeyId();
+        String accessKeySecret = OssProperties.getKeySecret();
+        String bucketName = OssProperties.getBucketName();
         try
         {
+            byte [] byteArr=file.getBytes();
+            InputStream inputStream = new ByteArrayInputStream(byteArr);
+
             // 上传文件路径
             String filePath = RuoYiConfig.getAvatarPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             fileName=fileName.replaceFirst("profile","Resource");
+            //上传oss
+            String filename = fileName.substring(fileName.lastIndexOf("/") + 1);
+            String path = fileName.substring(fileName.indexOf("/", 1) + 1, fileName.lastIndexOf("/") + 1);
+            Map<String, String> map = new HashMap<>();
+            map= OssUtil.uploadOss(endpoint, accessKeyId ,accessKeySecret,bucketName,inputStream,"Resource/"+path,filename);
+            String fileUrlOss=map.get("fileUrl");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
+            ajax.put("urlOss", fileUrlOss);
             ajax.put("fileName", fileName);
             ajax.put("newFileName", FileUtils.getName(fileName));
             ajax.put("originalFilename", file.getOriginalFilename());
@@ -127,16 +169,33 @@ public class CommonController
     @PostMapping("/uploadVoice")
     public AjaxResult uploadVoice(MultipartFile file) throws Exception
     {
+        /**
+         * 获取oss的属性
+         */
+        String endpoint = OssProperties.getEndpoint();
+        String accessKeyId = OssProperties.getKeyId();
+        String accessKeySecret = OssProperties.getKeySecret();
+        String bucketName = OssProperties.getBucketName();
         try
         {
+            byte [] byteArr=file.getBytes();
+            InputStream inputStream = new ByteArrayInputStream(byteArr);
+
             // 上传文件路径
             String filePath = RuoYiConfig.getVoicePath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             fileName=fileName.replaceFirst("profile","Resource");
+            //上传oss
+            String filename = fileName.substring(fileName.lastIndexOf("/") + 1);
+            String path = fileName.substring(fileName.indexOf("/", 1) + 1, fileName.lastIndexOf("/") + 1);
+            Map<String, String> map = new HashMap<>();
+            map= OssUtil.uploadOss(endpoint, accessKeyId ,accessKeySecret,bucketName,inputStream,"Resource/"+path,filename);
+            String fileUrlOss=map.get("fileUrl");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
+            ajax.put("urlOss", fileUrlOss);
             ajax.put("fileName", fileName);
             ajax.put("newFileName", FileUtils.getName(fileName));
             ajax.put("originalFilename", file.getOriginalFilename());
@@ -153,16 +212,34 @@ public class CommonController
     @PostMapping("/uploadVideo")
     public AjaxResult uploadVideo(MultipartFile file) throws Exception
     {
+        /**
+         * 获取oss的属性
+         */
+        String endpoint = OssProperties.getEndpoint();
+        String accessKeyId = OssProperties.getKeyId();
+        String accessKeySecret = OssProperties.getKeySecret();
+        String bucketName = OssProperties.getBucketName();
+
         try
         {
+            byte [] byteArr=file.getBytes();
+            InputStream inputStream = new ByteArrayInputStream(byteArr);
+
             // 上传文件路径
             String filePath = RuoYiConfig.getTongbuVoicePath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             fileName=fileName.replaceFirst("profile","Resource");
+            //上传oss
+            String filename = fileName.substring(fileName.lastIndexOf("/") + 1);
+            String path = fileName.substring(fileName.indexOf("/", 1) + 1, fileName.lastIndexOf("/") + 1);
+            Map<String, String> map = new HashMap<>();
+            map= OssUtil.uploadOss(endpoint, accessKeyId ,accessKeySecret,bucketName,inputStream,"Resource/"+path,filename);
+            String fileUrlOss=map.get("fileUrl");
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
+            ajax.put("urlOss", fileUrlOss);
             ajax.put("fileName", fileName);
             ajax.put("newFileName", FileUtils.getName(fileName));
             ajax.put("originalFilename", file.getOriginalFilename());
